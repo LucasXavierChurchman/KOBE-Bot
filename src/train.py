@@ -1,6 +1,6 @@
 import random
 import cv2
-import cv2.cv2 as cv2 #extra import gets rid of error warnings
+# import cv2.cv2 as cv2 #extra import gets rid of error warnings
 import numpy as np
 from imutils import paths
 from sklearn.preprocessing import LabelBinarizer
@@ -98,12 +98,15 @@ def train(images, labels, epochs, savename):
 
     model.fit(X_train, y_train, epochs = epochs)
 
-    model.save('{}_{}_epochs.model'.format(savename, epochs))
+
 
     return model
  
 if __name__ == '__main__':
     random.seed(17)
+    savename = 'dunk_v_shot'
+    epochs = 15
     target_labels = ['dunk', 'jumpshot']
     images, labels = load_images_and_labels(target_labels)
-    model = train(images, labels, epochs = 10, savename = 'dunk_v_shot')
+    model = train(images, labels, epochs = epochs, savename = savename)
+    model.save('{}_{}_epochs.model'.format(savename, epochs))
