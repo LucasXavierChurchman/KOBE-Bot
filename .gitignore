@@ -108,4 +108,7 @@ venv.bak/
 *.mp4
 *.jpeg
 *.png
+*.JPG
 
+#models
+*.model
