@@ -104,6 +104,7 @@ venv.bak/
 .mypy_cache/
 
 #data
+/data
 *.jpg
 *.mp4
 *.jpeg
@@ -111,6 +112,7 @@ venv.bak/
 *.JPG
 *.webp
 *.gif
+
 
 #models
 *.model
