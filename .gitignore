@@ -109,6 +109,8 @@ venv.bak/
 *.jpeg
 *.png
 *.JPG
+*.webp
+*.gif
 
 #models
 *.model
