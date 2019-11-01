@@ -1,5 +1,5 @@
 import os
-from skimage.io import imread
+from skimage.io import imread, imread_collection
 from skimage.transform import resize
 import matplotlib.pyplot as plt
 
@@ -8,15 +8,23 @@ def get_image(path):
     img = resize(img, (224,224))
     return img
 
-def get_all_images(dir):
-    images = []
-    for filename in os
+def get_all_images(folder):
+    # images = []
+    # for filename in os.listdir(folder):
+    #     print(os.path.join(folder, filename))
+    #     img = imread(os.path.join(folder, filename))
+    #     if img is not None:
+    #         images.append(img)
+    col_dir = '{}/*.jpg'.format(folder)
+    images = imread_collection(folder)
+    # images = images.concatenate()
+    return images
 
 def plot_image(v, ax, title):
     # img = v.reshape(224,244)
     ax.imshow(img)
     ax.set_title(title)
-    plt.savefig('plots/{}'.format(title))
+    plt.savefig('../plots/{}'.format(title))
     plt.show()
     return ax
 
