@@ -115,3 +115,7 @@ venv.bak/
 
 #models
 # *.model
+
+#jupyter
+*.ipynb_checkpoints
+*.ipynb
