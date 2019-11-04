@@ -1,6 +1,6 @@
 import random
 import cv2
-# import cv2.cv2 as cv2 #extra import gets rid of error warnings
+import cv2.cv2 as cv2 #extra import gets rid of error warnings
 import numpy as np
 from imutils import paths
 from sklearn.preprocessing import LabelBinarizer
@@ -15,19 +15,25 @@ from keras.layers import Input
 from keras.models import Model
 
 def load_images_and_labels(target_labels):
+    '''
+    Loads all images from directories with names in target_labels
+    a label and image array
+
+    TO DO: Make this work with np.load() and skimage (if possible)
+    '''
     images = []
     labels = []
 
     for label in target_labels:
-        image_dir = 'data/{}'.format(label)
+        image_dir = '../data/google_imgs/{}'.format(label)
         print('Loading from {}'.format(image_dir))
         image_paths = list(paths.list_images(image_dir))
 
-        for img in image_paths:
-            img = cv2.imread(img)
+        for path in image_paths:
+            img = cv2.imread(path)
             img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
             img = cv2.resize(img, (240, 240))
-            paths.list_images('data/{}'.format(label))
+            paths.list_images('../data/google_imgs/{}'.format(label))
 
             images.append(img)
             labels.append(label)
@@ -39,8 +45,10 @@ def load_images_and_labels(target_labels):
 
 def train(images, labels, epochs, savename):
 
+    # print(labels)
     lb = LabelBinarizer()
     labels = lb.fit_transform(labels)
+    # print(labels)
 
     X_train, X_test, y_train, y_test = train_test_split(images, labels, 
                                                         test_size = 0.20,
@@ -66,7 +74,7 @@ def train(images, labels, epochs, savename):
     #load transferred learning model. Need to try resnet50 as well
     transferred_model = Xception(weights = 'imagenet',
                                 include_top = False,
-                                input_tensor= Input(shape=(224, 224, 3)))
+                                input_tensor= Input(shape=(240, 240, 3)))
 
     #build rest of model
     head_model = transferred_model.output
@@ -87,6 +95,7 @@ def train(images, labels, epochs, savename):
 
     #need 2 column target for target
     y_train = np.hstack((y_train, 1-y_train))
+    y_test = np.hstack((y_test, 1-y_test))
 
     #gotta figure out why this wont work
     # H = model.fit_generator(
@@ -96,7 +105,9 @@ def train(images, labels, epochs, savename):
     #                         validation_steps=len(X_test) // 32,
     #                         epochs=epochs)
 
-    model.fit(X_train, y_train, epochs = epochs)
+    model.fit(train_transformations.flow(X_train, y_train), 
+            validation_data = (X_test, y_test),
+            epochs = epochs)
 
 
 
@@ -105,8 +116,8 @@ def train(images, labels, epochs, savename):
 if __name__ == '__main__':
     random.seed(17)
     savename = 'dunk_v_shot'
-    epochs = 15
+    epochs = 2
     target_labels = ['dunk', 'jumpshot']
     images, labels = load_images_and_labels(target_labels)
     model = train(images, labels, epochs = epochs, savename = savename)
-    model.save('{}_{}_epochs.model'.format(savename, epochs))
+    model.save('../models/{}_{}_epochs.model'.format(savename, epochs))
