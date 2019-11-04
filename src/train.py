@@ -26,7 +26,7 @@ def load_images_and_labels(target_labels):
         for img in image_paths:
             img = cv2.imread(img)
             img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
-            img = cv2.resize(img, (224, 224))
+            img = cv2.resize(img, (240, 240))
             paths.list_images('data/{}'.format(label))
 
             images.append(img)
