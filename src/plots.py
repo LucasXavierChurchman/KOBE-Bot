@@ -55,7 +55,9 @@ def plot_processing_demo(image_path, ax_color, ax_heatmap, ax_gray, title):
                                 )
 
 def plot_avgs(image_array_path, ax_color, ax_heatmap, ax_gray, category):
-
+    '''
+    Generates a plot
+    '''
     resolutions = [240, 120, 60]
     image_array = np.load(image_array_path)
     avg_img = image_array.mean(axis = 0)
@@ -77,7 +79,12 @@ def plot_avgs(image_array_path, ax_color, ax_heatmap, ax_gray, category):
 
     return ax_color, ax_heatmap, ax_gray
 
-def plot_pca(image_array_path, axs, axs_start, axs_stop):
+def plot_pca(image_array_path, axs1, ax2, ax3, ax4, ax5):
+    '''
+    Plots top 5 'eigen images' for a set of images. Lighter colored areas in these eigenimages indicate
+    areas of that are more deterministic/unique per image in the set.
+    '''
+    axs = [axs1, ax2, ax3, ax4, ax5]
     image_array = np.load(image_array_path)
     flat_array = []
     for img in image_array:
@@ -87,7 +94,7 @@ def plot_pca(image_array_path, axs, axs_start, axs_stop):
     flat_array = np.array(flat_array)
     pca = PCA(n_components=0.8)
     pca.fit(flat_array)
-    for i, ax in enumerate(axs.flat[axs_start:axs_stop]):
+    for i, ax in enumerate(axs):
         ax.imshow(pca.components_[i].reshape(240,240))#,cmap = plt.cm.gray)
     return axs
 
@@ -95,8 +102,11 @@ if __name__ == '__main__':
 
 
     fig, axs = plt.subplots(2,5, figsize=(12,4))
-    plot_pca('../data/jumpshot.npy', axs, 0, 5)
-    plot_pca('../data/dunk.npy', axs, 5, 10)
+    plot_pca('../data/jumpshot.npy', axs[0,0], axs[0,1], axs[0,2], axs[0,3], axs[0,4])
+    plot_pca('../data/dunk.npy', axs[1,0], axs[1,1], axs[1,2], axs[1,3], axs[1,4])
+    rows = ['Jumpshot','Dunk']
+    for ax, row in zip(axs[:,0], rows):
+        ax.set_ylabel(row, rotation=90, size='large')
     plt.suptitle('Jumpshot v Dunk Eigen Images')
     plt.savefig('../plots/pca')
 
