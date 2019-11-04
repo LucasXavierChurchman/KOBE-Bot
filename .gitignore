@@ -107,7 +107,7 @@ venv.bak/
 *.jpg
 *.mp4
 *.jpeg
-*.png
+# *.png #needed for graphics
 *.JPG
 *.webp
 *.gif
