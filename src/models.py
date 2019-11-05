@@ -44,12 +44,10 @@ def load_images_and_labels(target_labels):
 
     return images, labels
 
-def train(images, labels, epochs, savename):
+def train_CNN(images, labels, epochs, savename):
 
-    # print(labels)
     lb = LabelBinarizer()
     labels = lb.fit_transform(labels)
-    # print(labels)
 
     X_train, X_test, y_train, y_test = train_test_split(images, labels, 
                                                         test_size = 0.20,
@@ -69,15 +67,15 @@ def train(images, labels, epochs, savename):
 
     validation_transformations = ImageDataGenerator(ImageNet_mean)  
 
-    # train_transformations.mean = ImageNet_mean
-    # validation_transformations.mean = ImageNet_mean   
+    train_transformations.mean = ImageNet_mean
+    validation_transformations.mean = ImageNet_mean   
 
     #load transferred learning model. Need to try resnet50 as well
     transferred_model = ResNet50(weights = 'imagenet',
                                 include_top = False,
                                 input_tensor= Input(shape=(240, 240, 3)))
 
-    #build rest of model
+    #build head model
     head_model = transferred_model.output
     head_model = AveragePooling2D(pool_size=(7, 7))(head_model)
     head_model = Flatten(name="flatten")(head_model)
@@ -87,14 +85,14 @@ def train(images, labels, epochs, savename):
 
     model = Model(inputs=transferred_model.input, outputs=head_model)
 
-    #freeze layers from Xception modelc
+    #freeze layers from transferred model
     for layer in transferred_model.layers:
 	    layer.trainable = False
 
     opt = SGD(lr=0.0001, momentum=0.9, decay=0.0001)
     model.compile(loss="binary_crossentropy", optimizer=opt, metrics=["accuracy"])
 
-    #need 2 column target for target
+    #need 2 column array for target
     y_train = np.hstack((y_train, 1-y_train))
     y_test = np.hstack((y_test, 1-y_test))
 
@@ -120,5 +118,5 @@ if __name__ == '__main__':
     epochs = 10
     target_labels = ['dunk', 'jumpshot']
     images, labels = load_images_and_labels(target_labels)
-    model = train(images, labels, epochs = epochs, savename = savename)
-    model.save('../models/{}_{}_epochs.model'.format(savename, epochs))
+    model = train_CNN(images, labels, epochs = epochs, savename = savename)
+    model.save('../models/{}_{}_epochs_grayscale.model'.format(savename, epochs))
