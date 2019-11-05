@@ -14,6 +14,7 @@ from keras.optimizers import SGD
 from keras.layers import Input
 from keras.models import Model
 
+
 def load_images_and_labels(target_labels):
     '''
     Loads all images from directories with names in target_labels
@@ -72,7 +73,7 @@ def train(images, labels, epochs, savename):
     validation_transformations.mean = ImageNet_mean   
 
     #load transferred learning model. Need to try resnet50 as well
-    transferred_model = Xception(weights = 'imagenet',
+    transferred_model = ResNet50(weights = 'imagenet',
                                 include_top = False,
                                 input_tensor= Input(shape=(240, 240, 3)))
 
@@ -84,14 +85,14 @@ def train(images, labels, epochs, savename):
     head_model = Dropout(0.5)(head_model)
     head_model = Dense(len(lb.classes_), activation="softmax")(head_model)
 
+    model = Model(inputs=transferred_model.input, outputs=head_model)
+
     #freeze layers from Xception model
     for layer in transferred_model.layers:
 	    layer.trainable = False
 
-    model = Model(inputs=transferred_model.input, outputs=head_model)
-
-    # opt = SGD(lr=0.0001, momentum=0.9, decay=0.0001)
-    model.compile(loss="binary_crossentropy", optimizer='adam', metrics=["accuracy"])
+    opt = SGD(lr=0.0001, momentum=0.9, decay=0.0001)
+    model.compile(loss="binary_crossentropy", optimizer=opt, metrics=["accuracy"])
 
     #need 2 column target for target
     y_train = np.hstack((y_train, 1-y_train))
@@ -116,7 +117,7 @@ def train(images, labels, epochs, savename):
 if __name__ == '__main__':
     random.seed(17)
     savename = 'dunk_v_shot'
-    epochs = 2
+    epochs = 200
     target_labels = ['dunk', 'jumpshot']
     images, labels = load_images_and_labels(target_labels)
     model = train(images, labels, epochs = epochs, savename = savename)
