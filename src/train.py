@@ -69,8 +69,8 @@ def train(images, labels, epochs, savename):
 
     validation_transformations = ImageDataGenerator(ImageNet_mean)  
 
-    train_transformations.mean = ImageNet_mean
-    validation_transformations.mean = ImageNet_mean   
+    # train_transformations.mean = ImageNet_mean
+    # validation_transformations.mean = ImageNet_mean   
 
     #load transferred learning model. Need to try resnet50 as well
     transferred_model = ResNet50(weights = 'imagenet',
@@ -87,7 +87,7 @@ def train(images, labels, epochs, savename):
 
     model = Model(inputs=transferred_model.input, outputs=head_model)
 
-    #freeze layers from Xception model
+    #freeze layers from Xception modelc
     for layer in transferred_model.layers:
 	    layer.trainable = False
 
@@ -117,7 +117,7 @@ def train(images, labels, epochs, savename):
 if __name__ == '__main__':
     random.seed(17)
     savename = 'dunk_v_shot'
-    epochs = 200
+    epochs = 10
     target_labels = ['dunk', 'jumpshot']
     images, labels = load_images_and_labels(target_labels)
     model = train(images, labels, epochs = epochs, savename = savename)
