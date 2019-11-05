@@ -111,7 +111,8 @@ venv.bak/
 *.JPG
 *.webp
 *.gif
-*.npy
+dunk.npy
+jumpshot.npy
 
 #models
 # *.model
