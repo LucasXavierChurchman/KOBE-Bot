@@ -13,10 +13,13 @@ from sklearn.decomposition import PCA
 from image_processing import get_all_images, get_image, images_to_array
 
 def plot_image_color(v, ax, resolution, title):
+    '''
+    Displays a full color image with a given resolution
+    '''
     img = resize(v, (resolution, resolution))
     ax.imshow(img)
     ax.set_title(title)
-    # plt.savefig('../plots/{}'.format(title))
+    # plt.savefig('../plots+images/{}'.format(title))
     # plt.show()
     return ax
 
@@ -25,13 +28,13 @@ def plot_image_gray(v, ax, resolution, title, heatmap = False):
     if heatmap:
         ax.imshow(rgb2gray(img))
         ax.set_title(title)
-        # plt.savefig('../plots/{}'.format(title))
+        # plt.savefig('../plots+images/{}'.format(title))
         # plt.show()
         return ax
     else:
         ax.imshow(rgb2gray(img), cmap= plt.cm.gray)
         ax.set_title(title)
-        # plt.savefig('../plots/{}'.format(title))
+        # plt.savefig('../plots+images/{}'.format(title))
         # plt.show()
         return ax
 
@@ -92,10 +95,10 @@ def plot_pca(image_array_path, axs1, ax2, ax3, ax4, ax5):
         img = pd.Series(img.flatten())
         flat_array.append(img)
     flat_array = np.array(flat_array)
-    pca = PCA(n_components=0.8)
+    pca = PCA(n_components=0.5)
     pca.fit(flat_array)
     for i, ax in enumerate(axs):
-        ax.imshow(pca.components_[i].reshape(240,240))#,cmap = plt.cm.gray)
+        ax.imshow(pca.components_[i].reshape(240,240),cmap = plt.cm.gray)
     return axs
 
 if __name__ == '__main__':
@@ -108,7 +111,7 @@ if __name__ == '__main__':
     for ax, row in zip(axs[:,0], rows):
         ax.set_ylabel(row, rotation=90, size='large')
     plt.suptitle('Jumpshot v Dunk Eigen Images')
-    plt.savefig('../plots/pca')
+    plt.savefig('../plots+images/pca')
 
     # # path = '../data/google_imgs/test_jumpshot/1.maxresdefault.jpg'
     # # img = get_image(path)
@@ -124,12 +127,12 @@ if __name__ == '__main__':
 
     # fig.suptitle('Average Jumpshot vs Dunk, All Images')
     # # plt.tight_layout()
-    # plt.savefig('../plots/avg_google_img_all.png')
+    # plt.savefig('../plots+images/avg_google_img_all.png')
 
     # fig, axs = plt.subplots(1,3, figsize=(12,4))
     # plot_processing_demo('../data/google_imgs/test_dunk/jamal_posterize.jpg', axs[0], axs[1], axs[2], 'Single Image')
     # fig.suptitle('EDA Image Processing')
-    # plt.savefig('../plots/single_image_processing.png')
+    # plt.savefig('../plots+images/single_image_processing.png')
 
 
     
