@@ -11,18 +11,24 @@ import requests
 def make_video_data_csv(type):
     start_page_index = 0
 
+    # need to put these links in an external dictionary
     if type == 'dunk':
-        link = 'https://3ball.io/query?pageIndex=0&eventmsgtype[]=1&eventmsgactiontype[]=7&eventmsgactiontype[]=9&eventmsgactiontype[]=48&eventmsgactiontype[]=49&eventmsgactiontype[]=50&eventmsgactiontype[]=51&eventmsgactiontype[]=52&eventmsgactiontype[]=87&eventmsgactiontype[]=106&eventmsgactiontype[]=107&eventmsgactiontype[]=108&eventmsgactiontype[]=109&eventmsgactiontype[]=110'.format(start_page_index)
-    if type == 'three':
-        link = 'https://3ball.io/query?pageIndex={}&eventmsgtype[]=1&description=3PT&eventmsgactiontype[]=0&eventmsgactiontype[]=1&eventmsgactiontype[]=2&eventmsgactiontype[]=45&eventmsgactiontype[]=46&eventmsgactiontype[]=47&eventmsgactiontype[]=56&eventmsgactiontype[]=63&eventmsgactiontype[]=66&eventmsgactiontype[]=77&eventmsgactiontype[]=79&eventmsgactiontype[]=80&eventmsgactiontype[]=81&eventmsgactiontype[]=82&eventmsgactiontype[]=83&eventmsgactiontype[]=85&eventmsgactiontype[]=86&eventmsgactiontype[]=103&eventmsgactiontype[]=104&eventmsgactiontype[]=105'.format(start_page_index)
+        link = 'https://3ball.io/query?pageIndex={}&eventmsgtype[]=1&eventmsgactiontype[]=7&eventmsgactiontype[]=9&eventmsgactiontype[]=48&eventmsgactiontype[]=49&eventmsgactiontype[]=50&eventmsgactiontype[]=51&eventmsgactiontype[]=52&eventmsgactiontype[]=87&eventmsgactiontype[]=106&eventmsgactiontype[]=107&eventmsgactiontype[]=108&eventmsgactiontype[]=109&eventmsgactiontype[]=110'
+    elif type == 'three':
+        link = 'https://3ball.io/query?pageIndex={}&eventmsgtype[]=1&description=3PT&eventmsgactiontype[]=0&eventmsgactiontype[]=1&eventmsgactiontype[]=2&eventmsgactiontype[]=45&eventmsgactiontype[]=46&eventmsgactiontype[]=47&eventmsgactiontype[]=56&eventmsgactiontype[]=63&eventmsgactiontype[]=66&eventmsgactiontype[]=77&eventmsgactiontype[]=79&eventmsgactiontype[]=80&eventmsgactiontype[]=81&eventmsgactiontype[]=82&eventmsgactiontype[]=83&eventmsgactiontype[]=85&eventmsgactiontype[]=86&eventmsgactiontype[]=103&eventmsgactiontype[]=104&eventmsgactiontype[]=105'
+    elif type == 'denver_three':
+        link = 'https://3ball.io/query?pageIndex={}&eventmsgtype[]=1&description=3PT&home_team_id=1610612743'
+    elif type == 'denver_dunk':
+        link = 'https://3ball.io/query?pageIndex={}&eventmsgtype[]=1&eventmsgactiontype[]=7&eventmsgactiontype[]=9&eventmsgactiontype[]=48&eventmsgactiontype[]=49&eventmsgactiontype[]=50&eventmsgactiontype[]=51&eventmsgactiontype[]=52&eventmsgactiontype[]=87&eventmsgactiontype[]=106&eventmsgactiontype[]=107&eventmsgactiontype[]=108&eventmsgactiontype[]=109&eventmsgactiontype[]=110&home_team_id=1610612743'
     else:
         print('clip type not supported yet')
 
     n_pages = 20
 
     all_data = []
-    for i in range(1,n_pages+1):
-        url = link
+    for i in range(0,n_pages):
+        url = link.format(i)
+        print('Fetching page index: ', i)
         html = request.urlopen(url).read()
         data = json.loads(html)
         data = pd.DataFrame(data)
