@@ -114,6 +114,7 @@ venv.bak/
 *.gif
 *.csv
 
+*.npy
 dunk.npy
 jumpshot.npy
 broadcast_dunk.npy

@@ -1,7 +1,7 @@
-from keras.models import load_model
-import numpy as np
 import cv2
 import cv2.cv2 as cv2
+import numpy as np
+from keras.models import load_model
 
 model = load_model('../models/dunk_v_shot_15_epochs.model')
 

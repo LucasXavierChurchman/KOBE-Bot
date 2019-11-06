@@ -3,14 +3,15 @@ from tempfile import TemporaryFile
 
 import matplotlib
 import matplotlib.pyplot as plt
-import pandas as pd
 import numpy as np
+import pandas as pd
 from skimage.color import gray2rgb, rgb2gray, rgba2rgb
 from skimage.io import imread, imread_collection
 from skimage.transform import resize
 from sklearn.decomposition import PCA
 
 from image_processing import get_all_images, get_image, images_to_array
+
 
 def plot_image_color(v, ax, resolution, title):
     '''
@@ -136,7 +137,3 @@ if __name__ == '__main__':
     # plot_processing_demo('../data/google_imgs/test_dunk/jamal_posterize.jpg', axs[0], axs[1], axs[2], 'Single Image')
     # fig.suptitle('EDA Image Processing')
     # plt.savefig('../plots+images/single_image_processing.png')
-
-
-    
-    

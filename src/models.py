@@ -1,18 +1,19 @@
 import random
+
 import cv2
-import cv2.cv2 as cv2 #extra import gets rid of error warnings
+import cv2.cv2 as cv2  # extra import gets rid of error warnings
 import numpy as np
 from imutils import paths
-from sklearn.preprocessing import LabelBinarizer
-from sklearn.model_selection import train_test_split
-from keras.preprocessing.image import ImageDataGenerator
-from keras.applications.xception import Xception
 from keras.applications.resnet50 import ResNet50
-from keras.layers.core import Dropout, Flatten, Dense
-from keras.layers.pooling import AveragePooling2D
-from keras.optimizers import SGD
+from keras.applications.xception import Xception
 from keras.layers import Input
+from keras.layers.core import Dense, Dropout, Flatten
+from keras.layers.pooling import AveragePooling2D
 from keras.models import Model
+from keras.optimizers import SGD
+from keras.preprocessing.image import ImageDataGenerator
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import LabelBinarizer
 
 
 def load_images_and_labels(target_labels):
