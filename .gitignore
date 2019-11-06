@@ -115,6 +115,8 @@ dunk.npy
 jumpshot.npy
 broadcast_dunk.npy
 broadcast_jumpshot.npy
+broadcast_denver_dunk.npy
+broadcast_denver_three.npy
 
 #models
 # *.model

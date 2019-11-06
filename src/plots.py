@@ -118,8 +118,10 @@ if __name__ == '__main__':
 
     # jumpshot_image_list = get_all_images('../data/google_imgs/jumpshot')
     # jumpshot_image_array = images_to_array(jumpshot_image_list, 'jumpshot')
-    fig, axs = plt.subplots(1,3, figsize=(12,8))
-    plot_avgs('../data/broadcast_dunk.npy', axs[0], axs[1], axs[2], 'Broadcast Angle Dunk')
+    fig, axs = plt.subplots(2,3, figsize=(12,8))
+    plot_avgs('../data/image_arrays/broadcast_denver_three.npy', axs[0,0], axs[0,1], axs[0,2], 'Broadcast Angle Three Pointer')
+    plot_avgs('../data/image_arrays/broadcast_denver_dunk.npy', axs[1,0], axs[1,1], axs[1,2], 'Broadcast Angle Dunk')
+    plt.tight_layout()
     plt.show()
 
     # # dunk_image_list = get_all_images('../data/google_imgs/dunk')

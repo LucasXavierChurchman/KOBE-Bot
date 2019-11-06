@@ -8,6 +8,9 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 def get_image(path):
+    '''
+    Returns and resizes image from path
+    '''
     img = imread(path, plugin='matplotlib')
     img = resize(img, (240,240))
     return img
@@ -28,7 +31,7 @@ def images_to_array(image_list, save_name):
         if len(img.shape) == 3 and img.shape[2] == 4: #if rgba convert to rgb
             image_list[n] = rgba2rgb(img)
     image_array = np.array(image_list)
-    np.save('../data/{}'.format(save_name), image_array)
+    np.save('../data/image_arrays/{}'.format(save_name), image_array)
     return image_array
 
 if __name__ == '__main__':
