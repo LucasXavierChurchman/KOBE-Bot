@@ -71,6 +71,7 @@ target/
 
 # Jupyter Notebook
 .ipynb_checkpoints
+*.ipynb
 
 # pyenv
 .python-version
@@ -111,16 +112,16 @@ venv.bak/
 *.JPG
 *.webp
 *.gif
+*.csv
+
 dunk.npy
 jumpshot.npy
 broadcast_dunk.npy
-broadcast_jumpshot.npy
+broadcast_three.npy
 broadcast_denver_dunk.npy
 broadcast_denver_three.npy
 
 #models
 # *.model
 
-#jupyter
-*.ipynb_checkpoints
-*.ipynb
+
