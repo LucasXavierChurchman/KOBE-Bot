@@ -125,4 +125,6 @@ broadcast_denver_three.npy
 #models
 # *.model
 
+#jupyter
+*.ipynb_checkpoints
 

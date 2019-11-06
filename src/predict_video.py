@@ -1,6 +1,7 @@
 # USAGE
 # python predict_video.py --model model/activity.model --label-bin model/lb.pickle --input example_clips/lifting.mp4 --output output/lifting_128avg.avi --size 128
 
+<<<<<<< HEAD
 import argparse
 import pickle
 from collections import deque
@@ -9,6 +10,15 @@ import cv2
 import numpy as np
 # import the necessary packages
 from keras.models import load_model
+=======
+# import the necessary packages
+from keras.models import load_model
+from collections import deque
+import numpy as np
+import argparse
+import pickle
+import cv2
+>>>>>>> b51628cad0f54f1a1f5e2530ea1fdab8adb02dc7
 
 # construct the argument parser and parse the arguments
 ap = argparse.ArgumentParser()
@@ -99,4 +109,8 @@ while True:
 # release the file pointers
 print("[INFO] cleaning up...")
 writer.release()
+<<<<<<< HEAD
 vs.release()
+=======
+vs.release()
+>>>>>>> b51628cad0f54f1a1f5e2530ea1fdab8adb02dc7
