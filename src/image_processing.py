@@ -30,3 +30,6 @@ def images_to_array(image_list, save_name):
     image_array = np.array(image_list)
     np.save('../data/{}'.format(save_name), image_array)
     return image_array
+
+if __name__ == '__main__':
+    pass

@@ -103,23 +103,24 @@ def plot_pca(image_array_path, axs1, ax2, ax3, ax4, ax5):
 
 if __name__ == '__main__':
 
-
-    fig, axs = plt.subplots(2,5, figsize=(12,4))
-    plot_pca('../data/jumpshot.npy', axs[0,0], axs[0,1], axs[0,2], axs[0,3], axs[0,4])
-    plot_pca('../data/dunk.npy', axs[1,0], axs[1,1], axs[1,2], axs[1,3], axs[1,4])
-    rows = ['Jumpshot','Dunk']
-    for ax, row in zip(axs[:,0], rows):
-        ax.set_ylabel(row, rotation=90, size='large')
-    plt.suptitle('Jumpshot v Dunk Eigen Images')
-    plt.savefig('../plots+images/pca')
+    # fig, axs = plt.subplots(2,5, figsize=(12,4))
+    # plot_pca('../data/jumpshot.npy', axs[0,0], axs[0,1], axs[0,2], axs[0,3], axs[0,4])
+    # plot_pca('../data/dunk.npy', axs[1,0], axs[1,1], axs[1,2], axs[1,3], axs[1,4])
+    # rows = ['Jumpshot','Dunk']
+    # for ax, row in zip(axs[:,0], rows):
+    #     ax.set_ylabel(row, rotation=90, size='large')
+    # plt.suptitle('Jumpshot v Dunk Eigen Images')
+    # plt.savefig('../plots+images/pca')
 
     # # path = '../data/google_imgs/test_jumpshot/1.maxresdefault.jpg'
     # # img = get_image(path)
     # fig, axs = plt.subplots(2,3, figsize=(12,8))
 
-    # # jumpshot_image_list = get_all_images('../data/google_imgs/jumpshot')
-    # # jumpshot_image_array = images_to_array(jumpshot_image_list, 'jumpshot')
-    # plot_avgs('../data/jumpshot.npy', axs[0,0], axs[0,1], axs[0,2], 'Jumpshot')
+    # jumpshot_image_list = get_all_images('../data/google_imgs/jumpshot')
+    # jumpshot_image_array = images_to_array(jumpshot_image_list, 'jumpshot')
+    fig, axs = plt.subplots(1,3, figsize=(12,8))
+    plot_avgs('../data/broadcast_dunk.npy', axs[0], axs[1], axs[2], 'Broadcast Angle Dunk')
+    plt.show()
 
     # # dunk_image_list = get_all_images('../data/google_imgs/dunk')
     # # dunk_image_array = images_to_array(dunk_image_list, 'jumpshot')
