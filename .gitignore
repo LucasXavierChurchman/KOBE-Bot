@@ -128,3 +128,5 @@ broadcast_denver_three.npy
 #jupyter
 *.ipynb_checkpoints
 
+grid_search.py
+

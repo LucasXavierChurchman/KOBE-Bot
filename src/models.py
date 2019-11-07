@@ -81,7 +81,7 @@ def train_CNN(images, labels, epochs, savename):
     head_model = Flatten(name="flatten")(head_model)
     head_model = Dense(512, activation="relu")(head_model)
     head_model = Dropout(0.5)(head_model)
-    head_model = Dense(len(lb.classes_), activation="softmax")(head_model)
+    head_model = Dense(2, activation="softmax")(head_model)
 
     model = Model(inputs=transferred_model.input, outputs=head_model)
 
