@@ -1,5 +1,4 @@
 import random
-<<<<<<< HEAD
 
 import cv2
 import cv2.cv2 as cv2  # extra import gets rid of error warnings
@@ -15,22 +14,6 @@ from keras.optimizers import SGD
 from keras.preprocessing.image import ImageDataGenerator
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import LabelBinarizer
-=======
-import cv2
-import cv2.cv2 as cv2 #extra import gets rid of error warnings
-import numpy as np
-from imutils import paths
-from sklearn.preprocessing import LabelBinarizer
-from sklearn.model_selection import train_test_split
-from keras.preprocessing.image import ImageDataGenerator
-from keras.applications.xception import Xception
-from keras.applications.resnet50 import ResNet50
-from keras.layers.core import Dropout, Flatten, Dense
-from keras.layers.pooling import AveragePooling2D
-from keras.optimizers import SGD
-from keras.layers import Input
-from keras.models import Model
->>>>>>> b51628cad0f54f1a1f5e2530ea1fdab8adb02dc7
 
 
 def load_images_and_labels(target_labels):
@@ -137,8 +120,4 @@ if __name__ == '__main__':
     target_labels = ['dunk', 'jumpshot']
     images, labels = load_images_and_labels(target_labels)
     model = train_CNN(images, labels, epochs = epochs, savename = savename)
-<<<<<<< HEAD
     model.save('../models/{}_{}_epochs_grayscale.model'.format(savename, epochs))
-=======
-    model.save('../models/{}_{}_epochs_grayscale.model'.format(savename, epochs))
->>>>>>> b51628cad0f54f1a1f5e2530ea1fdab8adb02dc7

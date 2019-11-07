@@ -3,13 +3,8 @@ from tempfile import TemporaryFile
 
 import matplotlib
 import matplotlib.pyplot as plt
-<<<<<<< HEAD
 import numpy as np
 import pandas as pd
-=======
-import pandas as pd
-import numpy as np
->>>>>>> b51628cad0f54f1a1f5e2530ea1fdab8adb02dc7
 from skimage.color import gray2rgb, rgb2gray, rgba2rgb
 from skimage.io import imread, imread_collection
 from skimage.transform import resize
@@ -17,10 +12,6 @@ from sklearn.decomposition import PCA
 
 from image_processing import get_all_images, get_image, images_to_array
 
-<<<<<<< HEAD
-
-=======
->>>>>>> b51628cad0f54f1a1f5e2530ea1fdab8adb02dc7
 def plot_image_color(v, ax, resolution, title):
     '''
     Displays a full color image with a given resolution
@@ -127,15 +118,10 @@ if __name__ == '__main__':
 
     # jumpshot_image_list = get_all_images('../data/google_imgs/jumpshot')
     # jumpshot_image_array = images_to_array(jumpshot_image_list, 'jumpshot')
-<<<<<<< HEAD
     fig, axs = plt.subplots(2,3, figsize=(12,8))
     plot_avgs('../data/image_arrays/broadcast_denver_three.npy', axs[0,0], axs[0,1], axs[0,2], 'Broadcast Angle Three Pointer')
     plot_avgs('../data/image_arrays/broadcast_denver_dunk.npy', axs[1,0], axs[1,1], axs[1,2], 'Broadcast Angle Dunk')
     plt.tight_layout()
-=======
-    fig, axs = plt.subplots(1,3, figsize=(12,8))
-    plot_avgs('../data/broadcast_dunk.npy', axs[0], axs[1], axs[2], 'Broadcast Angle Dunk')
->>>>>>> b51628cad0f54f1a1f5e2530ea1fdab8adb02dc7
     plt.show()
 
     # # dunk_image_list = get_all_images('../data/google_imgs/dunk')
@@ -150,10 +136,3 @@ if __name__ == '__main__':
     # plot_processing_demo('../data/google_imgs/test_dunk/jamal_posterize.jpg', axs[0], axs[1], axs[2], 'Single Image')
     # fig.suptitle('EDA Image Processing')
     # plt.savefig('../plots+images/single_image_processing.png')
-<<<<<<< HEAD
-=======
-
-
-    
-    
->>>>>>> b51628cad0f54f1a1f5e2530ea1fdab8adb02dc7
