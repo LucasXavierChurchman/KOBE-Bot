@@ -118,15 +118,42 @@ def plot_pca(image_array_path, axs1, ax2, ax3, ax4, ax5):
         ax.grid(False)
     return axs
 
-def plot_model_results(model_path):
-    model = load_model(model_path)
+def plot_model_results(model_history_path, ax_loss, ax_acc):
+    history = pd.read_csv(model_history_path)
+    ax_loss.plot(history.loss, color = 'orangered', label = 'Loss', alpha = 0.6)
+    ax_loss.plot(history.val_loss, color = 'purple', label = 'Validation Loss', alpha = 0.6)
+    ax_loss.annotate(np.round(history.loss.iloc[-1], 2), 
+                    xy = (200, history.loss.iloc[-1]))
+    ax_loss.annotate(np.round(history.val_loss.iloc[-1], 2), 
+                    xy = (200, history.val_loss.iloc[-1]))      
+    ax_loss.legend()          
 
-    print(model.history.history)
+    ax_acc.plot(history.accuracy, 
+                color = 'orangered', 
+                label = 'Accuracy', 
+                alpha = 0.6)
+    ax_acc.plot(history.val_accuracy, 
+                color = 'purple', 
+                label = 'Validation Accuracy', 
+                alpha = 0.6)
+    ax_acc.annotate(np.round(history.accuracy.iloc[-1], 2), 
+                    xy = (200, history.accuracy.iloc[-1]))
+    ax_acc.annotate(np.round(history.val_accuracy.iloc[-1], 2), 
+                    xy = (200, history.val_accuracy.iloc[-1]))
+    ax_acc.legend()
+    
+    print(history)
 
 if __name__ == '__main__':
     matplotlib.style.use('ggplot')
-
-    plot_model_results('../models/broadcast_100_epochs_88_acc.model')
+    fig, axs = plt.subplots(2,2, figsize = (12,6))
+    plot_model_results('../models/broadcast_200_epochs_history_90_acc.csv', axs[0,1], axs[1,1])
+    cols = ['Google Images', 'Broadcast Angle']
+    for ax, col in zip(axs[0], cols):
+        ax.set_title(col)
+    plot_model_results('../models/google_200_epochs_history_81_acc.csv', axs[0,0], axs[1,0])
+    plt.tight_layout()
+    plt.savefig('../plots+images/model_results')
 
     # fig, axs = plt.subplots(2,5, figsize=(12,4))
     # plot_pca('../data/image_arrays/broadcast_denver_dunk.npy', axs[0,0], axs[0,1], axs[0,2], axs[0,3], axs[0,4])

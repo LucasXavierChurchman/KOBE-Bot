@@ -3,7 +3,7 @@ import cv2.cv2 as cv2
 import numpy as np
 from keras.models import load_model
 
-model = load_model('../models/dunk_v_shot_15_epochs.model')
+model = load_model('../models/broadcast_200_epochs.model')
 
 img_path = '../data/google_imgs/test_jumpshot/6.649728386.0.jpg'
  
