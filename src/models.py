@@ -15,8 +15,9 @@ from keras.preprocessing.image import ImageDataGenerator
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import LabelBinarizer
 
+import tensorflow as tf
 
-def load_images_and_labels(target_labels):
+def load_images_and_labels(target_labels, type):
     '''
     Loads all images from directories with names in target_labels
     a label and image array
@@ -26,7 +27,10 @@ def load_images_and_labels(target_labels):
     labels = []
 
     for label in target_labels:
-        image_dir = '../data/google_imgs/{}'.format(label)
+        if type == 'google':
+            image_dir = '../data/google_imgs/{}'.format(label)
+        if type == 'broadcast':
+            image_dir = '../data/broadcast_imgs/{}'.format(label)
         print('Loading from {}'.format(image_dir))
         image_paths = list(paths.list_images(image_dir))
 
@@ -44,7 +48,7 @@ def load_images_and_labels(target_labels):
 
     return images, labels
 
-def train_CNN(images, labels, epochs, savename):
+def train_CNN(images, labels, epochs):
 
     lb = LabelBinarizer()
     labels = lb.fit_transform(labels)
@@ -96,15 +100,7 @@ def train_CNN(images, labels, epochs, savename):
     y_train = np.hstack((y_train, 1-y_train))
     y_test = np.hstack((y_test, 1-y_test))
 
-    #gotta figure out why this wont work
-    # H = model.fit_generator(
-    #                         train_transformations.flow(X_train, y_train, batch_size=32),
-    #                         steps_per_epoch=len(X_train) // 32,
-    #                         validation_data=validation_transformations.flow(X_test, y_test),
-    #                         validation_steps=len(X_test) // 32,
-    #                         epochs=epochs)
-
-    model.fit(train_transformations.flow(X_train, y_train), 
+    model.fit(X_train, y_train, 
             validation_data = (X_test, y_test),
             epochs = epochs)
 
@@ -112,9 +108,9 @@ def train_CNN(images, labels, epochs, savename):
  
 if __name__ == '__main__':
     random.seed(17)
-    savename = 'dunk_v_shot'
-    epochs = 10
+    epochs = 100
+    category = 'google'
     target_labels = ['dunk', 'jumpshot']
-    images, labels = load_images_and_labels(target_labels)
-    model = train_CNN(images, labels, epochs = epochs, savename = savename)
-    model.save('../models/{}_{}_epochs_grayscale.model'.format(savename, epochs))
+    images, labels = load_images_and_labels(target_labels, type = category)
+    model = train_CNN(images, labels, epochs = epochs)
+    model.save('../models/{}_{}_epochs.model'.format(category, epochs))
