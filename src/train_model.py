@@ -60,7 +60,7 @@ def train_CNN(images, labels, epochs):
                                                         stratify = labels,
                                                         random_state = 17)
 
-    #need 2 column array for target
+    #need 2 column array for target. [0,1] = dunk, [1,0] = jumpshot/three
     y_train = np.hstack((y_train, 1-y_train))
     y_test = np.hstack((y_test, 1-y_test))
 
