@@ -5,13 +5,15 @@ import matplotlib
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
+from keras.models import load_model
+from skimage import exposure
 from skimage.color import gray2rgb, rgb2gray, rgba2rgb
 from skimage.io import imread, imread_collection
 from skimage.transform import resize
 from sklearn.decomposition import PCA
-from skimage import exposure
 
 from image_processing import get_all_images, get_image, images_to_array
+
 
 def plot_image_color(v, ax, resolution, title):
     '''
@@ -116,17 +118,24 @@ def plot_pca(image_array_path, axs1, ax2, ax3, ax4, ax5):
         ax.grid(False)
     return axs
 
+def plot_model_results(model_path):
+    model = load_model(model_path)
+
+    print(model.history.history)
+
 if __name__ == '__main__':
     matplotlib.style.use('ggplot')
 
-    fig, axs = plt.subplots(2,5, figsize=(12,4))
-    plot_pca('../data/image_arrays/broadcast_denver_dunk.npy', axs[0,0], axs[0,1], axs[0,2], axs[0,3], axs[0,4])
-    plot_pca('../data/image_arrays/broadcast_denver_three.npy', axs[1,0], axs[1,1], axs[1,2], axs[1,3], axs[1,4])
-    rows = ['Jumpshot','Dunk']
-    for ax, row in zip(axs[:,0], rows):
-        ax.set_ylabel(row, rotation=90, size='large')
-    plt.tight_layout()
-    plt.savefig('../plots+images/denver_pca')
+    plot_model_results('../models/broadcast_100_epochs_88_acc.model')
+
+    # fig, axs = plt.subplots(2,5, figsize=(12,4))
+    # plot_pca('../data/image_arrays/broadcast_denver_dunk.npy', axs[0,0], axs[0,1], axs[0,2], axs[0,3], axs[0,4])
+    # plot_pca('../data/image_arrays/broadcast_denver_three.npy', axs[1,0], axs[1,1], axs[1,2], axs[1,3], axs[1,4])
+    # rows = ['Jumpshot','Dunk']
+    # for ax, row in zip(axs[:,0], rows):
+    #     ax.set_ylabel(row, rotation=90, size='large')
+    # plt.tight_layout()
+    # plt.savefig('../plots+images/denver_pca')
 
     # # path = '../data/google_imgs/test_jumpshot/1.maxresdefault.jpg'
     # # img = get_image(path)

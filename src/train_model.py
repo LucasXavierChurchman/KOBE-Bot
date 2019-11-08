@@ -3,6 +3,8 @@ import random
 import cv2
 import cv2.cv2 as cv2  # extra import gets rid of error warnings
 import numpy as np
+import pandas as pd
+import tensorflow as tf
 from imutils import paths
 from keras.applications.resnet50 import ResNet50
 from keras.applications.xception import Xception
@@ -14,8 +16,8 @@ from keras.optimizers import SGD
 from keras.preprocessing.image import ImageDataGenerator
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import LabelBinarizer
+from sklearn.metrics import confusion_matrix
 
-import tensorflow as tf
 
 def load_images_and_labels(target_labels, type):
     '''
@@ -98,19 +100,34 @@ def train_CNN(images, labels, epochs):
     opt = SGD(lr=0.0001, momentum=0.9, decay=0.0001)
     model.compile(loss="binary_crossentropy", optimizer=opt, metrics=["accuracy"])
 
+    history = model.fit(X_train, y_train, 
+                        validation_data = (X_test, y_test),
+                        epochs = epochs)
 
+    y_pred = model.predict(X_test)
+    # con_mat = tf.math.confusion_matrix( labels = y_train, 
+    #                                     predictions = y_pred).np()
+    # con_mat_norm = np.around(con_mat.astype('float') / con_mat.sum(axis=1)[:, np.newaxis], decimals=2)
+    # con_mat_df = pd.DataFrame(con_mat_norm)
 
-    model.fit(train_transformations.flow(X_train, y_train), 
-            validation_data = (X_test, y_test),
-            epochs = epochs)
+    con_mat = confusion_matrix(y_test.argmax(axis =1), y_pred.argmax(axis = 1))
 
-    return model
+    return model, history, con_mat
  
 if __name__ == '__main__':
     random.seed(17)
-    epochs = 100
-    category = 'google'
-    target_labels = ['dunk', 'jumpshot']
+    epochs = 1
+    category = 'broadcast'
+    target_labels = ['dunk', 'three']
     images, labels = load_images_and_labels(target_labels, type = category)
-    model = train_CNN(images, labels, epochs = epochs)
+    model, history, con_mat = train_CNN(images, labels, epochs = epochs)
+
+    #save model and history
     model.save('../models/{}_{}_epochs.model'.format(category, epochs))
+
+    hist_df = pd.DataFrame(history.history)
+    hist_csv = '../models/{}_{}_epochs_history.csv'.format(category, epochs)
+    with open(hist_csv, mode='w') as f:
+        hist_df.to_csv(f)
+
+    np.savetxt('../models/{}_{}_epochs_conmat.csv'.format(category, epochs), con_mat)
