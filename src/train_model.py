@@ -66,17 +66,18 @@ def train_CNN(images, labels, epochs):
 
     ImageNet_mean = np.array([ 123.68, 116.779, 103.939 ])
 
-    train_transformations = ImageDataGenerator(
-                        rotation_range=45,
-                        zoom_range=0.25,
-                        width_shift_range=0.2,
-                        height_shift_range=0.2,
-                        fill_mode="wrap") #constant, nearest, reflect or wrap
+    # # Transformations not used in final model, may utilize in future
+    # train_transformations = ImageDataGenerator(
+    #                     rotation_range=45,
+    #                     zoom_range=0.25,
+    #                     width_shift_range=0.2,
+    #                     height_shift_range=0.2,
+    #                     fill_mode="wrap") #constant, nearest, reflect or wrap
 
-    validation_transformations = ImageDataGenerator(ImageNet_mean)  
+    # validation_transformations = ImageDataGenerator(ImageNet_mean)  
 
-    train_transformations.mean = ImageNet_mean
-    validation_transformations.mean = ImageNet_mean   
+    # train_transformations.mean = ImageNet_mean
+    # validation_transformations.mean = ImageNet_mean   
 
     #load transferred learning model
     transferred_model = ResNet50(weights = 'imagenet',
@@ -105,10 +106,6 @@ def train_CNN(images, labels, epochs):
                         epochs = epochs)
 
     y_pred = model.predict(X_test)
-    # con_mat = tf.math.confusion_matrix( labels = y_train, 
-    #                                     predictions = y_pred).np()
-    # con_mat_norm = np.around(con_mat.astype('float') / con_mat.sum(axis=1)[:, np.newaxis], decimals=2)
-    # con_mat_df = pd.DataFrame(con_mat_norm)
 
     con_mat = confusion_matrix(y_test.argmax(axis =1), y_pred.argmax(axis = 1))
 
@@ -116,9 +113,9 @@ def train_CNN(images, labels, epochs):
  
 if __name__ == '__main__':
     random.seed(17)
-    epochs = 1
-    category = 'broadcast'
-    target_labels = ['dunk', 'three']
+    epochs = 200
+    category = 'google'
+    target_labels = ['dunk', 'jumpshot']
     images, labels = load_images_and_labels(target_labels, type = category)
     model, history, con_mat = train_CNN(images, labels, epochs = epochs)
 

@@ -112,7 +112,7 @@ venv.bak/
 *.JPG
 *.webp
 *.gif
-*.csv
+# *.csv
 
 *.npy
 dunk.npy
