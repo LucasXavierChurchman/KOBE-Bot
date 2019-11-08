@@ -125,7 +125,7 @@ broadcast_denver_three.npy
 #models
 *.model
 
-#jupyter
+#jupyte
 *.ipynb_checkpoints
 
 grid_search.py
