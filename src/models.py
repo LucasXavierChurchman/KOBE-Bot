@@ -58,6 +58,10 @@ def train_CNN(images, labels, epochs):
                                                         stratify = labels,
                                                         random_state = 17)
 
+    #need 2 column array for target
+    y_train = np.hstack((y_train, 1-y_train))
+    y_test = np.hstack((y_test, 1-y_test))
+
     ImageNet_mean = np.array([ 123.68, 116.779, 103.939 ])
 
     train_transformations = ImageDataGenerator(
@@ -65,8 +69,6 @@ def train_CNN(images, labels, epochs):
                         zoom_range=0.25,
                         width_shift_range=0.2,
                         height_shift_range=0.2,
-                        shear_range=0.15,
-                        horizontal_flip=True,
                         fill_mode="wrap") #constant, nearest, reflect or wrap
 
     validation_transformations = ImageDataGenerator(ImageNet_mean)  
@@ -74,7 +76,7 @@ def train_CNN(images, labels, epochs):
     train_transformations.mean = ImageNet_mean
     validation_transformations.mean = ImageNet_mean   
 
-    #load transferred learning model. Need to try resnet50 as well
+    #load transferred learning model
     transferred_model = ResNet50(weights = 'imagenet',
                                 include_top = False,
                                 input_tensor= Input(shape=(240, 240, 3)))
@@ -96,11 +98,9 @@ def train_CNN(images, labels, epochs):
     opt = SGD(lr=0.0001, momentum=0.9, decay=0.0001)
     model.compile(loss="binary_crossentropy", optimizer=opt, metrics=["accuracy"])
 
-    #need 2 column array for target
-    y_train = np.hstack((y_train, 1-y_train))
-    y_test = np.hstack((y_test, 1-y_test))
 
-    model.fit(X_train, y_train, 
+
+    model.fit(train_transformations.flow(X_train, y_train), 
             validation_data = (X_test, y_test),
             epochs = epochs)
 
