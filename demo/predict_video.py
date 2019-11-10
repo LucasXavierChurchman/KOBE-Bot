@@ -9,8 +9,8 @@ from keras.models import load_model
 
 # construct the argument parser and parse the arguments
 ap = argparse.ArgumentParser()
-ap.add_argument("-n", "--n", required=True,
-	help="video number in folder you want to r")
+ap.add_argument("-name", "--n", required=True,
+	help="clip name in folder to predict")
 ap.add_argument("-o", "--output", required=True,
 	help="path to output")
 args = vars(ap.parse_args())
@@ -31,6 +31,8 @@ writer = None
 
 # loop over frames from the video file stream
 frame_n = 0
+jump_frames = 0
+dunk_frames = 0
 while True:
 	(grabbed, frame) = vs.read()
 
@@ -49,13 +51,16 @@ while True:
 	# Q.append(frame_pred)
 	overall_pred = overall_pred + pred_prob
 
+	
 	results = np.array(Q).mean(axis=0)
 	if pred_prob[0] > pred_prob[1]:
 		pred = 'jumpshot'
+		jump_frames += 1
 	else:
 		pred = 'dunk'
+		dunk_frames += 1
 
-	print(frame_n, ':', pred_prob)
+	print(frame_n, ':', pred_prob, pred)
 	frame_n += 1
 
 	rolling_pred = overall_pred/frame_n
@@ -92,7 +97,8 @@ while True:
 	if key == ord("q"):
 		break
 
-print(rolling_pred)
+print('Frames classified as jumpshot: ', jump_frames, '\nFrames classified as dunk: ', dunk_frames)
+print('Prediction Probability [jumpshot, dunk]: ',rolling_pred)
 if rolling_pred[0] > rolling_pred[1]:
 	print ('KOBE!')
 else:
