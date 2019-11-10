@@ -105,8 +105,9 @@ venv.bak/
 .mypy_cache/
 
 #data
+/data
 *.jpg
-*.mp4
+#*.mp4
 *.jpeg
 # *.png #needed for graphics
 *.JPG
