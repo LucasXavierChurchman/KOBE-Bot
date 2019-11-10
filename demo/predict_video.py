@@ -1,11 +1,12 @@
 import argparse
 import pickle
 from collections import deque
-
+import time
 import cv2
 import cv2.cv2 as cv2
 import numpy as np
 from keras.models import load_model
+from playsound import playsound
 
 # construct the argument parser and parse the arguments
 ap = argparse.ArgumentParser()
@@ -36,23 +37,25 @@ dunk_frames = 0
 while True:
 	(grabbed, frame) = vs.read()
 
-
+	#Once there is no more frames to grab, wait 3 seconds then break
 	if not grabbed:
+		# time.sleep(1)
 		break
-
+	
+	#set width and height for output
 	if W is None or H is None:
 		(H, W) = frame.shape[:2]
 
+	#copy frame and transform frame for prediction
 	output = frame.copy()
 	frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
 	frame = cv2.resize(frame, (240, 240)).astype("float32")
 
+	#predict frame, add prediction probabilty to overall prediction
 	pred_prob = model.predict(np.expand_dims(frame, axis=0))[0]
-	# Q.append(frame_pred)
 	overall_pred = overall_pred + pred_prob
 
-	
-	results = np.array(Q).mean(axis=0)
+	#get probability label and iterate number of frames predicted as each class
 	if pred_prob[0] > pred_prob[1]:
 		pred = 'jumpshot'
 		jump_frames += 1
@@ -60,11 +63,14 @@ while True:
 		pred = 'dunk'
 		dunk_frames += 1
 
+	#print prediction
 	print(frame_n, ':', pred_prob, pred)
 	frame_n += 1
 
+	#calculate overall prediction at current frame
 	rolling_pred = overall_pred/frame_n
 
+	#print predictions to output window
 	text1 = 'Current Frame Prediction: {}'.format(pred)
 	text2 = 'Rolling Prediciton Probabilty [jumpshot, dunk]: {}'.format(np.round(rolling_pred,2))
 	cv2.putText(img = output, 
@@ -72,7 +78,7 @@ while True:
 				org = (35, 50), 
 				fontFace = cv2.FONT_HERSHEY_DUPLEX,
 				fontScale = 1, 
-				color = (0, 255, 0),
+				color = (0, 255, 255),
 				thickness = 3)
 	cv2.putText(output, 
 				text2, 
@@ -82,18 +88,16 @@ while True:
 				color = (0, 255, 0),
 				thickness = 3)
 
+	#Write and display frame
 	if writer is None:
 		fourcc = cv2.VideoWriter_fourcc(*"MJPG")
 		writer = cv2.VideoWriter(args["output"], fourcc, 30,
 			(W, H), True)
-			
 	writer.write(output)
-
-	#show
 	cv2.imshow("Output", output)
-	key = cv2.waitKey(1) & 0xFF
 
-	#end if q key is pressed
+	#break if q key is pressed
+	key = cv2.waitKey(1) & 0xFF
 	if key == ord("q"):
 		break
 
@@ -101,8 +105,10 @@ print('Frames classified as jumpshot: ', jump_frames, '\nFrames classified as du
 print('Prediction Probability [jumpshot, dunk]: ',rolling_pred)
 if rolling_pred[0] > rolling_pred[1]:
 	print ('KOBE!')
+	playsound('kobe.mp3')
 else:
 	print('SLAM DUNK!')
+	playsound('slam_dunk.mp3')
 
 writer.release()
 vs.release()
