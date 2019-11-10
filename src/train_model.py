@@ -64,9 +64,10 @@ def train_CNN(images, labels, epochs):
     y_train = np.hstack((y_train, 1-y_train))
     y_test = np.hstack((y_test, 1-y_test))
 
-    ImageNet_mean = np.array([ 123.68, 116.779, 103.939 ])
+    # ImageNet_mean = np.array([ 123.68, 116.779, 103.939 ])
 
     # # Transformations not used in final model, may utilize in future
+    # ImageNet_mean = np.array([ 123.68, 116.779, 103.939 ])
     # train_transformations = ImageDataGenerator(
     #                     rotation_range=45,
     #                     zoom_range=0.25,
@@ -89,7 +90,7 @@ def train_CNN(images, labels, epochs):
     head_model = AveragePooling2D(pool_size=(7, 7))(head_model)
     head_model = Flatten(name="flatten")(head_model)
     head_model = Dense(512, activation="relu")(head_model)
-    head_model = Dropout(0.5)(head_model)
+    head_model = Dropout(0.50)(head_model)
     head_model = Dense(2, activation="softmax")(head_model)
 
     model = Model(inputs=transferred_model.input, outputs=head_model)

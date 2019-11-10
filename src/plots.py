@@ -50,24 +50,26 @@ def plot_intensities(v, ax, resolution):
     # ax.set_ylim(top = 7001)
     return ax
 
-def plot_processing_demo(image_path, ax_color, ax_heatmap, ax_gray, title):
+def plot_processing_demo(path0, path1, path2, path3, ax0, ax1, ax2, ax3):
     resolutions = [240, 240, 240]
-    img = get_image(image_path)
-    img = np.array(img)
-    ax_color = plot_image_color(img, 
-                                ax_color, 
-                                resolutions[0], 
-                                '{} Color\n{}x{}'.format(title, resolutions[0], resolutions[0])
-                            )   
-    ax_heatmap = plot_image_gray(img, 
-                                ax_heatmap, resolutions[1], 
-                                '{} Grayscale\n{}x{}'.format(title, resolutions[1], resolutions[1]),
-                                heatmap = True
-                            )
-    ax_gray = plot_image_gray   (img, 
-                                ax_gray, resolutions[2], 
-                                '{} Grayscale High Contrast\n{}x{}'.format(title, resolutions[2], resolutions[2])
-                                )
+    img0 = get_image(path0)
+    img0 = np.array(img0)
+    ax0 = plot_image_color(img0 ,ax0, resolutions[0], 'Google Image Jumpshot')
+
+    img1 = get_image(path1)
+    img1 = np.array(img1)
+    ax1 = plot_image_color(img1 ,ax1, resolutions[0], 'Google Image Dunk')
+
+    img2 = get_image(path2)
+    img2 = np.array(img2)
+    ax2 = plot_image_color(img2 ,ax2, resolutions[0], 'Broadcast Angle Jumpshot')
+
+    img3 = get_image(path3)
+    img3 = np.array(img3)
+    ax3 = plot_image_color(img3 ,ax3, resolutions[0], 'Broadcast Angle Dunk')
+
+    return ax0, ax1, ax2, ax3
+
 
 def plot_avgs(image_array_path, ax_color, ax_gray, ax_hist, category):
     '''
@@ -146,14 +148,24 @@ def plot_model_results(model_history_path, ax_loss, ax_acc):
 
 if __name__ == '__main__':
     matplotlib.style.use('ggplot')
-    fig, axs = plt.subplots(2,2, figsize = (12,6))
-    plot_model_results('../models/broadcast_200_epochs_history_90_acc.csv', axs[0,1], axs[1,1])
-    cols = ['Google Images', 'Broadcast Angle']
-    for ax, col in zip(axs[0], cols):
-        ax.set_title(col)
-    plot_model_results('../models/google_200_epochs_history_81_acc.csv', axs[0,0], axs[1,0])
+    fig, axs = plt.subplots(2,2, figsize = (12,8))
+    plot_processing_demo('../data/google_imgs/test_jumpshot/3.Jeremy-Lin-STACK1-629x459.jpg',
+                        '../data/google_imgs/test_dunk/1.919689104.jpg',
+                        '../data/broadcast_imgs/three/denver_three_52_frame_387.jpg',
+                        '../data/broadcast_imgs/dunk/denver_dunk_58_frame_146.jpg',
+
+                        axs[0,0], axs[1,0], axs[0,1], axs[1,1])
     plt.tight_layout()
-    plt.savefig('../plots+images/model_results')
+    plt.show()
+
+    # fig, axs = plt.subplots(2,2, figsize = (12,6))
+    # plot_model_results('../models/broadcast_200_epochs_history_90_acc.csv', axs[0,1], axs[1,1])
+    # cols = ['Google Images', 'Broadcast Angle']
+    # for ax, col in zip(axs[0], cols):
+    #     ax.set_title(col)
+    # plot_model_results('../models/google_200_epochs_history_81_acc.csv', axs[0,0], axs[1,0])
+    # plt.tight_layout()
+    # plt.savefig('../plots+images/model_results')
 
     # fig, axs = plt.subplots(2,5, figsize=(12,4))
     # plot_pca('../data/image_arrays/broadcast_denver_dunk.npy', axs[0,0], axs[0,1], axs[0,2], axs[0,3], axs[0,4])
