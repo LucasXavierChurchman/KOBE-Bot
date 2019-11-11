@@ -64,9 +64,8 @@ def train_CNN(images, labels, epochs):
     y_train = np.hstack((y_train, 1-y_train))
     y_test = np.hstack((y_test, 1-y_test))
 
-    # ImageNet_mean = np.array([ 123.68, 116.779, 103.939 ])
-
-    # # Transformations not used in final model, may utilize in future
+    # # Transformations not used in final model, keeping here
+    # to play with in the future
     # ImageNet_mean = np.array([ 123.68, 116.779, 103.939 ])
     # train_transformations = ImageDataGenerator(
     #                     rotation_range=45,
@@ -115,8 +114,8 @@ def train_CNN(images, labels, epochs):
 if __name__ == '__main__':
     random.seed(17)
     epochs = 200
-    category = 'google'
-    target_labels = ['dunk', 'jumpshot']
+    category = 'broadcast'
+    target_labels = ['dunk', 'three']
     images, labels = load_images_and_labels(target_labels, type = category)
     model, history, con_mat = train_CNN(images, labels, epochs = epochs)
 

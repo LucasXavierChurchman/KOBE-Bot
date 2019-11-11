@@ -17,8 +17,6 @@ def predict_img(img_path, model):
     print(np.round(pred, 2))
 
 if __name__ == '__main__':
-    model = load_model('../models/broadcast_200_epochs_90_acc.model')
-    # img_path = '../data/broadcast_imgs/temp_frames/denver_dunk_55_frame.jpg'
-    # predict_img(img_path, model)
-
-    pass
+    model = load_model('../models/google_200_epochs_81_acc.model')
+    img_path = '../data/google_imgs/test_dunk/1.919689104.jpg'
+    predict_img(img_path, model)

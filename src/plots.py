@@ -35,7 +35,7 @@ def plot_image_gray(v, ax, resolution, title, heatmap = False):
         # plt.show()
         return ax
     else:
-        img = exposure.equalize_hist(img, nbins=600)
+        # img = exposure.equalize_hist(img, nbins=600)
         ax.imshow(rgb2gray(img), cmap= plt.cm.gray)
         ax.set_title(title)
         # plt.savefig('../plots+images/{}'.format(title))
@@ -77,10 +77,7 @@ def plot_avgs(image_array_path, ax_color, ax_gray, ax_hist, category):
     '''
     resolutions = [240, 240, 240]
     image_array = np.load(image_array_path)
-    print(image_array.shape)
     avg_img = image_array.mean(axis = 0)
-    print(avg_img.shape)
-
 
     ax_color = plot_image_color(avg_img, 
                                 ax_color, 
@@ -90,9 +87,8 @@ def plot_avgs(image_array_path, ax_color, ax_gray, ax_hist, category):
     ax_gray = plot_image_gray(  avg_img, 
                                 ax_gray, 
                                 resolutions[1], 
-                                '{} Grayscale High Contrast\n{}x{}'.format(category, resolutions[2], resolutions[2])
+                                '{} Grayscale\n{}x{}'.format(category, resolutions[2], resolutions[2])
                                 )
-
     ax_hist = plot_intensities( avg_img,
                                 ax_hist,
                                 resolutions[2]
@@ -148,24 +144,25 @@ def plot_model_results(model_history_path, ax_loss, ax_acc):
 
 if __name__ == '__main__':
     matplotlib.style.use('ggplot')
-    fig, axs = plt.subplots(2,2, figsize = (12,8))
-    plot_processing_demo('../data/google_imgs/test_jumpshot/3.Jeremy-Lin-STACK1-629x459.jpg',
-                        '../data/google_imgs/test_dunk/1.919689104.jpg',
-                        '../data/broadcast_imgs/three/denver_three_52_frame_387.jpg',
-                        '../data/broadcast_imgs/dunk/denver_dunk_58_frame_146.jpg',
+    
+    # fig, axs = plt.subplots(2,2, figsize = (12,8))
+    # plot_processing_demo('../data/google_imgs/test_jumpshot/3.Jeremy-Lin-STACK1-629x459.jpg',
+    #                     '../data/google_imgs/test_dunk/1.919689104.jpg',
+    #                     '../data/broadcast_imgs/three/denver_three_52_frame_387.jpg',
+    #                     '../data/broadcast_imgs/dunk/denver_dunk_58_frame_146.jpg',
 
-                        axs[0,0], axs[1,0], axs[0,1], axs[1,1])
-    plt.tight_layout()
-    plt.show()
-
-    # fig, axs = plt.subplots(2,2, figsize = (12,6))
-    # plot_model_results('../models/broadcast_200_epochs_history_90_acc.csv', axs[0,1], axs[1,1])
-    # cols = ['Google Images', 'Broadcast Angle']
-    # for ax, col in zip(axs[0], cols):
-    #     ax.set_title(col)
-    # plot_model_results('../models/google_200_epochs_history_81_acc.csv', axs[0,0], axs[1,0])
+    #                     axs[0,0], axs[1,0], axs[0,1], axs[1,1])
     # plt.tight_layout()
-    # plt.savefig('../plots+images/model_results')
+    # plt.show()
+
+    fig, axs = plt.subplots(2,2, figsize = (12,6))
+    plot_model_results('../models/broadcast_200_epochs_history_90_acc.csv', axs[0,1], axs[1,1])
+    cols = ['Google Images', 'Broadcast Angle']
+    for ax, col in zip(axs[0], cols):
+        ax.set_title(col)
+    plot_model_results('../models/google_200_epochs_history_81_acc.csv', axs[0,0], axs[1,0])
+    plt.tight_layout()
+    plt.savefig('../plots+images/model_results')
 
     # fig, axs = plt.subplots(2,5, figsize=(12,4))
     # plot_pca('../data/image_arrays/broadcast_denver_dunk.npy', axs[0,0], axs[0,1], axs[0,2], axs[0,3], axs[0,4])
@@ -193,13 +190,13 @@ if __name__ == '__main__':
     # plt.show()
 
     # fig, axs = plt.subplots(2,3, figsize=(12,8))
-    # plot_avgs('../data/image_arrays/jumpshot.npy', axs[0,0], axs[0,1], axs[0,2], '')
-    # plot_avgs('../data/image_arrays/dunk.npy', axs[1,0], axs[1,1], axs[1,2], '')
+    # plot_avgs('../data/image_arrays/denver_jumpshot.npy', axs[0,0], axs[0,1], axs[0,2], '')
+    # plot_avgs('../data/image_arrays/denver_dunk.npy', axs[1,0], axs[1,1], axs[1,2], '')
     # rows = ['Jump Shot','Dunk']
     # for ax, row in zip(axs[:,0], rows):
     #     ax.set_ylabel(row, rotation=90, size='large')
     # plt.tight_layout()
-    # plt.savefig('../plots+images/google_image_avgs')
+    # plt.savefig('../plots+images/denver_image_avgs')
     # plt.show()
 
     # # dunk_image_list = get_all_images('../data/google_imgs/dunk')
