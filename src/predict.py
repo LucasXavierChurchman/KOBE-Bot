@@ -1,8 +1,9 @@
+from collections import deque
 import cv2
 import cv2.cv2 as cv2
 import numpy as np
 from keras.models import load_model
-from collections import deque
+
 
 def predict_img(img_path, model):
     '''

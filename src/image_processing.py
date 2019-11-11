@@ -1,11 +1,9 @@
 import os
 from tempfile import TemporaryFile
-
 import matplotlib
 import matplotlib.pyplot as plt
 import numpy as np
-from google_images_download import \
-    google_images_download 
+from google_images_download import google_images_download
 from skimage.color import gray2rgb, rgb2gray, rgba2rgb
 from skimage.io import imread, imread_collection
 from skimage.transform import resize

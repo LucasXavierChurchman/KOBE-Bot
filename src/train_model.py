@@ -1,5 +1,4 @@
 import random
-
 import cv2
 import cv2.cv2 as cv2  # extra import gets rid of error warnings
 import numpy as np
@@ -17,7 +16,6 @@ from keras.preprocessing.image import ImageDataGenerator
 from sklearn.metrics import confusion_matrix
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import LabelBinarizer
-
 
 def load_images_and_labels(target_labels, type):
     '''
@@ -129,7 +127,6 @@ if __name__ == '__main__':
     images, labels = load_images_and_labels(target_labels, type = category)
     model, history, con_mat = train_CNN(images, labels, epochs = epochs)
 
-    #save model, history, and confusion matrix
     model.save('../models/{}_{}_epochs.model'.format(category, epochs))
 
     hist_df = pd.DataFrame(history.history)

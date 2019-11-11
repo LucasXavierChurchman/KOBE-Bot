@@ -9,28 +9,20 @@ import numpy as np
 import pandas as pd
 import requests
 
-
-def make_video_data_csv(type):
+def make_video_data_csv(play_type, n_pages):
     '''
-    Creates a CSV with data from highlight page links in /data/clips
+    Creates a CSV with data from links in /data/clips/links.csv
+    Reads from n_pages of highlights from the link, where there are 50
+    highlights per page
 
     type = dunk, three, denver_three, denver_dunk
 
     TODO: put links in external dictionary
     '''
-
-    if type == 'dunk':
-        link = 'https://3ball.io/query?pageIndex={}&eventmsgtype[]=1&eventmsgactiontype[]=7&eventmsgactiontype[]=9&eventmsgactiontype[]=48&eventmsgactiontype[]=49&eventmsgactiontype[]=50&eventmsgactiontype[]=51&eventmsgactiontype[]=52&eventmsgactiontype[]=87&eventmsgactiontype[]=106&eventmsgactiontype[]=107&eventmsgactiontype[]=108&eventmsgactiontype[]=109&eventmsgactiontype[]=110'
-    elif type == 'three':
-        link = 'https://3ball.io/query?pageIndex={}&eventmsgtype[]=1&description=3PT&eventmsgactiontype[]=0&eventmsgactiontype[]=1&eventmsgactiontype[]=2&eventmsgactiontype[]=45&eventmsgactiontype[]=46&eventmsgactiontype[]=47&eventmsgactiontype[]=56&eventmsgactiontype[]=63&eventmsgactiontype[]=66&eventmsgactiontype[]=77&eventmsgactiontype[]=79&eventmsgactiontype[]=80&eventmsgactiontype[]=81&eventmsgactiontype[]=82&eventmsgactiontype[]=83&eventmsgactiontype[]=85&eventmsgactiontype[]=86&eventmsgactiontype[]=103&eventmsgactiontype[]=104&eventmsgactiontype[]=105'
-    elif type == 'denver_three':
-        link = 'https://3ball.io/query?pageIndex={}&eventmsgtype[]=1&description=3PT&home_team_id=1610612743'
-    elif type == 'denver_dunk':
-        link = 'https://3ball.io/query?pageIndex={}&eventmsgtype[]=1&eventmsgactiontype[]=7&eventmsgactiontype[]=9&eventmsgactiontype[]=48&eventmsgactiontype[]=49&eventmsgactiontype[]=50&eventmsgactiontype[]=51&eventmsgactiontype[]=52&eventmsgactiontype[]=87&eventmsgactiontype[]=106&eventmsgactiontype[]=107&eventmsgactiontype[]=108&eventmsgactiontype[]=109&eventmsgactiontype[]=110&home_team_id=1610612743'
-    else:
-        print('clip type not supported yet')
-
-    n_pages = 20
+    link_dict = pd.read_csv('../data/clips/links.csv', 
+                            sep = ',').set_index('play_type')
+    print(link_dict)
+    link = link_dict['link'].loc[play_type]
 
     all_data = []
     for i in range(0,n_pages):
@@ -42,12 +34,13 @@ def make_video_data_csv(type):
         all_data.append(data)
 
     df = pd.concat(all_data)
-    df.to_csv('../data/clips/{}/{}_{}.csv'.format(type, type, n_pages*50)) #there are 50 clips per page
+    #there are 50 clips per page
+    df.to_csv('../data/clips/{}/{}_{}.csv'.format(type, type, n_pages*50)) 
 
 def download_clips(type, n_clips):
     '''
-    Reads csv produced make_video_data and downloads the specificied number of clips
-    to data/clips
+    Reads csv produced make_video_data and downloads the specificied number of 
+    clips to data/clips
     '''
     df = pd.read_csv('../data/clips/{}/{}_1000.csv'.format(type, type))
 
@@ -72,8 +65,8 @@ def extract_frames(type, clip_number):
   '''
   Writes individual frames of clips into /data/broadcast_imgs/temp_frames'
 
-  Erases current contents of /data/broadcast_imgs/temp_frames' each time the function
-  is executed
+  Erases current contents of /data/broadcast_imgs/temp_frames' each time the 
+  function is executed
   '''
 
   #erase current contents of temp folder
@@ -100,5 +93,5 @@ def extract_frames(type, clip_number):
         break
     count += 1
 
-if __name__ == '__main__':
-    pass
+# if __name__ == '__main__':
+#     pass
