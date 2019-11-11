@@ -17,8 +17,7 @@ def make_video_data_csv(play_play_type, n_pages):
         n_pages = number of pages from the link to read. There are 50 videos per page
 
     Returns:
-        NONE
-    TODO: put links in external dictionary
+        None
     '''
     link_dict = pd.read_csv('../data/clips/links.csv', 
                             sep = ',').set_index('play_play_type')
