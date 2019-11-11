@@ -93,5 +93,5 @@ def extract_frames(type, clip_number):
         break
     count += 1
 
-# if __name__ == '__main__':
-#     pass
+if __name__ == '__main__':
+    pass
