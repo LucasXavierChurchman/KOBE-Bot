@@ -2,12 +2,12 @@ import json
 import os
 import time
 from urllib import request
-import cv2
 import cv2.cv2 as cv2
 import nltk
 import numpy as np
 import pandas as pd
 import requests
+
 
 def make_video_data_csv(play_type, n_pages):
     '''
@@ -89,7 +89,7 @@ def extract_frames(type, clip_number):
     success, image = vidcap.read()
     save_path = frame_folder + '/{}_{}_frame_{}.jpg'
     cv2.imwrite(save_path.format(type, clip_number, count), image)
-    if cv2.waitKey(10) == 27:  # exit if Escape is hit
+    if cv2.waitKey(10) == 27:
         break
     count += 1
 

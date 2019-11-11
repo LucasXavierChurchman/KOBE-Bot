@@ -1,6 +1,5 @@
 import random
-import cv2
-import cv2.cv2 as cv2  # extra import gets rid of error warnings
+import cv2.cv2 as cv2
 import numpy as np
 import pandas as pd
 import tensorflow as tf

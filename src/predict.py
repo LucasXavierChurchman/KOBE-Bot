@@ -1,5 +1,4 @@
 from collections import deque
-import cv2
 import cv2.cv2 as cv2
 import numpy as np
 from keras.models import load_model
@@ -21,6 +20,4 @@ def predict_img(img_path, model):
     print(np.round(pred, 2))
 
 if __name__ == '__main__':
-    model = load_model('../models/google_200_epochs_81_acc.model')
-    img_path = '../data/google_imgs/test_dunk/1.919689104.jpg'
-    predict_img(img_path, model)
+    pass
