@@ -3,6 +3,7 @@ import os
 import time
 from urllib import request
 import cv2
+import cv2.cv2 as cv2
 import nltk
 import numpy as np
 import pandas as pd
@@ -10,9 +11,14 @@ import requests
 
 
 def make_video_data_csv(type):
-    start_page_index = 0
+    '''
+    Creates a CSV with data from highlight page links in /data/clips
 
-    # need to put these links in an external dictionary
+    type = dunk, three, denver_three, denver_dunk
+
+    TODO: put links in external dictionary
+    '''
+
     if type == 'dunk':
         link = 'https://3ball.io/query?pageIndex={}&eventmsgtype[]=1&eventmsgactiontype[]=7&eventmsgactiontype[]=9&eventmsgactiontype[]=48&eventmsgactiontype[]=49&eventmsgactiontype[]=50&eventmsgactiontype[]=51&eventmsgactiontype[]=52&eventmsgactiontype[]=87&eventmsgactiontype[]=106&eventmsgactiontype[]=107&eventmsgactiontype[]=108&eventmsgactiontype[]=109&eventmsgactiontype[]=110'
     elif type == 'three':
@@ -39,7 +45,10 @@ def make_video_data_csv(type):
     df.to_csv('../data/clips/{}/{}_{}.csv'.format(type, type, n_pages*50)) #there are 50 clips per page
 
 def download_clips(type, n_clips):
-
+    '''
+    Reads csv produced make_video_data and downloads the specificied number of clips
+    to data/clips
+    '''
     df = pd.read_csv('../data/clips/{}/{}_1000.csv'.format(type, type))
 
     links = list(df['video_url'])

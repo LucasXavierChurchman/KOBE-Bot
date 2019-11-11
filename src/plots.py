@@ -10,7 +10,7 @@ from skimage import exposure
 from skimage.color import gray2rgb, rgb2gray, rgba2rgb
 from skimage.io import imread, imread_collection
 from skimage.transform import resize
-from sklearn.decomposition import PCA
+from sklearn.decomposition import PCA, NMF
 
 from image_processing import get_all_images, get_image, images_to_array
 
@@ -109,9 +109,10 @@ def plot_pca(image_array_path, axs1, ax2, ax3, ax4, ax5):
         img = pd.Series(img.flatten())
         flat_array.append(img)
     flat_array = np.array(flat_array)
-    pca = PCA(n_components=0.5)
+    pca = NMF(n_components=10)
     pca.fit(flat_array)
     for i, ax in enumerate(axs):
+        print(pca.components_[i])
         ax.imshow(pca.components_[i].reshape(240,240),cmap = plt.cm.gray)
         ax.grid(False)
     return axs
@@ -155,23 +156,25 @@ if __name__ == '__main__':
     # plt.tight_layout()
     # plt.show()
 
-    fig, axs = plt.subplots(2,2, figsize = (12,6))
-    plot_model_results('../models/broadcast_200_epochs_history_90_acc.csv', axs[0,1], axs[1,1])
-    cols = ['Google Images', 'Broadcast Angle']
-    for ax, col in zip(axs[0], cols):
-        ax.set_title(col)
-    plot_model_results('../models/google_200_epochs_history_81_acc.csv', axs[0,0], axs[1,0])
-    plt.tight_layout()
-    plt.savefig('../plots+images/model_results')
-
-    # fig, axs = plt.subplots(2,5, figsize=(12,4))
-    # plot_pca('../data/image_arrays/broadcast_denver_dunk.npy', axs[0,0], axs[0,1], axs[0,2], axs[0,3], axs[0,4])
-    # plot_pca('../data/image_arrays/broadcast_denver_three.npy', axs[1,0], axs[1,1], axs[1,2], axs[1,3], axs[1,4])
-    # rows = ['Jumpshot','Dunk']
-    # for ax, row in zip(axs[:,0], rows):
-    #     ax.set_ylabel(row, rotation=90, size='large')
+    # fig, axs = plt.subplots(2,2, figsize = (12,6))
+    # plot_model_results('../models/broadcast_200_epochs_history_90_acc.csv', axs[0,1], axs[1,1])
+    # cols = ['Google Images', 'Broadcast Angle']
+    # for ax, col in zip(axs[0], cols):
+    #     ax.set_title(col)
+    # plot_model_results('../models/google_200_epochs_history_81_acc.csv', axs[0,0], axs[1,0])
     # plt.tight_layout()
-    # plt.savefig('../plots+images/denver_pca')
+    # plt.savefig('../plots+images/model_results')
+
+    fig, axs = plt.subplots(2,5, figsize=(12,4))
+    plot_pca('../data/image_arrays/denver_jumpshot.npy', axs[0,0], axs[0,1], axs[0,2], axs[0,3], axs[0,4])
+    plot_pca('../data/image_arrays/denver_dunk.npy', axs[1,0], axs[1,1], axs[1,2], axs[1,3], axs[1,4])
+    rows = ['Jumpshot','Dunk']
+    for ax, row in zip(axs[:,0], rows):
+        ax.set_ylabel(row, rotation=90, size='large')
+    plt.tight_layout()
+    plt.show()
+
+    # plt.savefig('../plots+images/google_pca')
 
     # # path = '../data/google_imgs/test_jumpshot/1.maxresdefault.jpg'
     # # img = get_image(path)
@@ -190,13 +193,13 @@ if __name__ == '__main__':
     # plt.show()
 
     # fig, axs = plt.subplots(2,3, figsize=(12,8))
-    # plot_avgs('../data/image_arrays/denver_jumpshot.npy', axs[0,0], axs[0,1], axs[0,2], '')
-    # plot_avgs('../data/image_arrays/denver_dunk.npy', axs[1,0], axs[1,1], axs[1,2], '')
-    # rows = ['Jump Shot','Dunk']
+    # plot_avgs('../data/image_arrays/google_jumpshot.npy', axs[0,0], axs[0,1], axs[0,2], '')
+    # plot_avgs('../data/image_arrays/google_dunk.npy', axs[1,0], axs[1,1], axs[1,2], '')
+    # rows = ['Jumpshot','Dunk']
     # for ax, row in zip(axs[:,0], rows):
     #     ax.set_ylabel(row, rotation=90, size='large')
     # plt.tight_layout()
-    # plt.savefig('../plots+images/denver_image_avgs')
+    # plt.savefig('../plots+images/google_image_avgs')
     # plt.show()
 
     # # dunk_image_list = get_all_images('../data/google_imgs/dunk')

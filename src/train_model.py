@@ -23,7 +23,8 @@ def load_images_and_labels(target_labels, type):
     '''
     Loads all images from directories with names in target_labels
     a label and image array
-    TO DO: Make this work with np.load() and skimage (if possible)
+
+    TODO: Make this work with np.load() and skimage (if possible)
     '''
     images = []
     labels = []
@@ -51,10 +52,17 @@ def load_images_and_labels(target_labels, type):
     return images, labels
 
 def train_CNN(images, labels, epochs):
+    '''
+    Train the CNN with the training data
 
+    TODO: Allow other hyper parameters as inputs. Tune/add layers.
+    '''
+
+    #turn string labels into binary labels
     lb = LabelBinarizer()
     labels = lb.fit_transform(labels)
 
+    #Train test split
     X_train, X_test, y_train, y_test = train_test_split(images, labels, 
                                                         test_size = 0.20,
                                                         stratify = labels,
@@ -64,27 +72,26 @@ def train_CNN(images, labels, epochs):
     y_train = np.hstack((y_train, 1-y_train))
     y_test = np.hstack((y_test, 1-y_test))
 
-    # # Transformations not used in final model, keeping here
-    # to play with in the future
-    # ImageNet_mean = np.array([ 123.68, 116.779, 103.939 ])
-    # train_transformations = ImageDataGenerator(
-    #                     rotation_range=45,
-    #                     zoom_range=0.25,
-    #                     width_shift_range=0.2,
-    #                     height_shift_range=0.2,
-    #                     fill_mode="wrap") #constant, nearest, reflect or wrap
+    # Transformations
+    ImageNet_mean = np.array([ 123.68, 116.779, 103.939 ])
+    train_transformations = ImageDataGenerator(
+                        rotation_range=45,
+                        zoom_range=0.25,
+                        width_shift_range=0.2,
+                        height_shift_range=0.2,
+                        fill_mode="wrap") #constant, nearest, reflect or wrap
 
-    # validation_transformations = ImageDataGenerator(ImageNet_mean)  
+    validation_transformations = ImageDataGenerator(ImageNet_mean)  
 
-    # train_transformations.mean = ImageNet_mean
-    # validation_transformations.mean = ImageNet_mean   
+    train_transformations.mean = ImageNet_mean
+    validation_transformations.mean = ImageNet_mean   
 
     #load transferred learning model
     transferred_model = ResNet50(weights = 'imagenet',
                                 include_top = False,
                                 input_tensor= Input(shape=(240, 240, 3)))
 
-    #build head model
+    #build model head
     head_model = transferred_model.output
     head_model = AveragePooling2D(pool_size=(7, 7))(head_model)
     head_model = Flatten(name="flatten")(head_model)
@@ -98,15 +105,17 @@ def train_CNN(images, labels, epochs):
     for layer in transferred_model.layers:
 	    layer.trainable = False
 
+    #initialize stochastic gradient descent optimizer
     opt = SGD(lr=0.0001, momentum=0.9, decay=0.0001)
-    model.compile(loss="binary_crossentropy", optimizer=opt, metrics=["accuracy"])
 
+    #compile and fit model
+    model.compile(loss="binary_crossentropy", optimizer=opt, metrics=["accuracy"])
     history = model.fit(X_train, y_train, 
                         validation_data = (X_test, y_test),
                         epochs = epochs)
 
+    #get predictions and generate confusion matrix data
     y_pred = model.predict(X_test)
-
     con_mat = confusion_matrix(y_test.argmax(axis =1), y_pred.argmax(axis = 1))
 
     return model, history, con_mat
@@ -119,7 +128,7 @@ if __name__ == '__main__':
     images, labels = load_images_and_labels(target_labels, type = category)
     model, history, con_mat = train_CNN(images, labels, epochs = epochs)
 
-    #save model and history
+    #save model, history, and confusion matrix
     model.save('../models/{}_{}_epochs.model'.format(category, epochs))
 
     hist_df = pd.DataFrame(history.history)
