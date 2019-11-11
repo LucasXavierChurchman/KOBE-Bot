@@ -9,20 +9,20 @@ import pandas as pd
 import requests
 
 
-def make_video_data_csv(play_play_type, n_pages):
+def make_video_data_csv(play_type, n_pages):
     '''
     Creates and saves a CSV with data from links in /data/clips/links.csv
     Arguments:
-        play_play_type = string  (dunk, three, denver_three, or denver_dunk)
+        play_type = string  (dunk, three, denver_three, or denver_dunk)
         n_pages = number of pages from the link to read. There are 50 videos per page
 
     Returns:
         None
     '''
     link_dict = pd.read_csv('../data/clips/links.csv', 
-                            sep = ',').set_index('play_play_type')
+                            sep = ',').set_index('play_type')
     print(link_dict)
-    link = link_dict['link'].loc[play_play_type]
+    link = link_dict['link'].loc[play_type]
 
     all_data = []
     for i in range(0,n_pages):
