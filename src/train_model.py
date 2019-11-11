@@ -21,6 +21,14 @@ def load_images_and_labels(target_labels, type):
     Loads all images from directories with names in target_labels
     a label and image array
 
+    Arguments:
+        target_labels: list of labels. Must be same as folders in data direcotry
+        type: type of images to be loaded (google or broadcast)
+
+    Returns:
+        images: numpy array of images
+        labels: numpy array of labels
+
     TODO: Make this work with np.load() and skimage (if possible)
     '''
     images = []
@@ -51,6 +59,16 @@ def load_images_and_labels(target_labels, type):
 def train_CNN(images, labels, epochs):
     '''
     Train the CNN with the training data and given number of epochs
+
+    Arguments:
+        images: numpy array of rgb images
+        labels: numpy array of image class labels
+        epochs: number of epochs for training
+
+    Returns:
+        model: trained keras model
+        history: model history csv
+        conmat: model confusion matrix
 
     TODO: Allow other hyper parameters as inputs, Tune/add layers, try different
     augmentations

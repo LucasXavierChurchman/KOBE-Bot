@@ -25,7 +25,8 @@ def plot_image_color(v, ax, resolution, title):
     resoltion: square size for the output image plot
     title: axis title
 
-    Returns: matplotlib axis
+    Returns: 
+        ax: matplotlib axis
     '''
     img = resize(v, (resolution, resolution))
     ax.imshow(img)
@@ -43,7 +44,8 @@ def plot_image_gray(v, ax, resolution, title, greenblue = False):
         title: axis title
         greenblue: If True the plot will be plotted without the grayscale colormap
 
-    Returns: matplotlib axis
+    Returns: 
+        ax: matplotlib axis
     '''
     img = resize(v, (resolution, resolution))
     if greenblue:
@@ -64,7 +66,8 @@ def plot_intensities(v, ax, resolution):
         ax: matplotlib axis
         resoltion: square size for the output image plot
 
-    Returns: matplotlib axis
+    Returns: 
+        ax: matplotlib axis
     '''
     img = resize(v, (resolution,resolution))
     ax.hist(resize(img, (240,240)).ravel(), bins = 100, color = 'Red', alpha = 0.6)
@@ -81,7 +84,8 @@ def plot_processing_demo(path0, path1, path2, path3, ax0, ax1, ax2, ax3):
         path0, path1, path2, path3: paths to the image files that will be plotted
         ax0, ax1, ax2, ax3: axes to be plotted on
 
-    Returns: ax0, ax1, ax2, ax3
+    Returns: 
+        ax0, ax1, ax2, ax3: axes for plotting
     '''
     resolutions = [240, 240, 240]
     img0 = get_image(path0)
@@ -114,7 +118,8 @@ def plot_avgs(v_path, ax_color, ax_gray, ax_hist, category):
         ax_color, ax_gray, ax_hist: axes for color, grayscale, and pixel intensity plots
         category: image category type for axis title
 
-    returns: ax_color, ax_gray, ax_hist
+    Returns: 
+        ax_color, ax_gray, ax_hist: axes for plotting
     '''
     resolutions = [240, 240, 240]
     image_array = np.load(v_path)
@@ -146,7 +151,8 @@ def plot_nmf(v_path, ax0, ax1, ax2, ax3, ax4):
         v_path: path to image array.
         ax0, ax1, ax2, ax3, ax4: matplotlib axes for each eigen image
 
-    returns: list of axes
+    Returns: 
+        axs: list of axes
     '''
     axs = [ax0, ax1, ax2, ax3, ax4]
     image_array = np.load(v_path)
