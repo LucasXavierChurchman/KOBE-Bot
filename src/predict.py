@@ -6,7 +6,14 @@ from keras.models import load_model
 
 def predict_img(img_path, model):
     '''
-    Predicts the class of an image with a given model
+    Predicts class of an image
+
+    Arguments:
+        img_path: path to image file
+        model: keras model
+
+    Returns:
+        None
     '''
     img = cv2.imread(img_path)
     cv2.waitKey()
