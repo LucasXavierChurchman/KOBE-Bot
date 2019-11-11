@@ -5,6 +5,9 @@ from keras.models import load_model
 from collections import deque
 
 def predict_img(img_path, model):
+    '''
+    Predicts the class of an image with a given model
+    '''
     img = cv2.imread(img_path)
     cv2.waitKey()
 
@@ -13,7 +16,7 @@ def predict_img(img_path, model):
 
     pred = model.predict(np.expand_dims(img, axis=0))[0]
 
-    # print('[0,1] = dunk, [1,0] = jumpshot')
+    print('[0,1] = dunk, [1,0] = jumpshot')
     print(np.round(pred, 2))
 
 if __name__ == '__main__':

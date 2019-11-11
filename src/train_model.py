@@ -14,9 +14,9 @@ from keras.layers.pooling import AveragePooling2D
 from keras.models import Model
 from keras.optimizers import SGD
 from keras.preprocessing.image import ImageDataGenerator
+from sklearn.metrics import confusion_matrix
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import LabelBinarizer
-from sklearn.metrics import confusion_matrix
 
 
 def load_images_and_labels(target_labels, type):
@@ -53,7 +53,7 @@ def load_images_and_labels(target_labels, type):
 
 def train_CNN(images, labels, epochs):
     '''
-    Train the CNN with the training data
+    Train the CNN with the training data and given number of epochs
 
     TODO: Allow other hyper parameters as inputs. Tune/add layers.
     '''
