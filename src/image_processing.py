@@ -74,7 +74,7 @@ def images_to_array(image_list, save_name):
         image_array: numpy array of imagaes
     '''
     for n, img in enumerate(image_list):
-         #if grayscale convery to rgb since all images must have same dimension
+         #if grayscale convert to rgb since all images must have same dimension
         if len(img.shape) == 2:
              #gray2rgb is deprecated and can't find a solutuion. Will pop in the meantime
             image_list.pop(n)
