@@ -9,20 +9,21 @@ import pandas as pd
 import requests
 
 
-def make_video_data_csv(play_type, n_pages):
+def make_video_data_csv(play_play_type, n_pages):
     '''
-    Creates a CSV with data from links in /data/clips/links.csv
-    Reads from n_pages of highlights from the link, where there are 50
-    highlights per page
+    Creates and saves a CSV with data from links in /data/clips/links.csv
+    Arguments:
+        play_play_type = string  (dunk, three, denver_three, or denver_dunk)
+        n_pages = number of pages from the link to read. There are 50 videos per page
 
-    type = dunk, three, denver_three, denver_dunk
-
+    Returns:
+        NONE
     TODO: put links in external dictionary
     '''
     link_dict = pd.read_csv('../data/clips/links.csv', 
-                            sep = ',').set_index('play_type')
+                            sep = ',').set_index('play_play_type')
     print(link_dict)
-    link = link_dict['link'].loc[play_type]
+    link = link_dict['link'].loc[play_play_type]
 
     all_data = []
     for i in range(0,n_pages):
@@ -35,23 +36,30 @@ def make_video_data_csv(play_type, n_pages):
 
     df = pd.concat(all_data)
     #there are 50 clips per page
-    df.to_csv('../data/clips/{}/{}_{}.csv'.format(type, type, n_pages*50)) 
+    df.to_csv('../data/clips/{}/{}_{}.csv'.format(play_type, play_type, n_pages*50)) 
 
-def download_clips(type, n_clips):
+def download_clips(play_type, n_clips):
     '''
     Reads csv produced make_video_data and downloads the specificied number of 
     clips to data/clips
+
+    Arguments:
+        play_type: string of play_type of play for saved mp4 files
+        n_clips: number of clips to be downloaded
+
+    Returns:
+        None
     '''
-    df = pd.read_csv('../data/clips/{}/{}_1000.csv'.format(type, type))
+    df = pd.read_csv('../data/clips/{}/{}_1000.csv'.format(play_type, play_type))
 
     links = list(df['video_url'])
 
     start = time.time()
     for i, link in enumerate(links[0:n_clips]):  
 
-        local_filename = '{}_{}.mp4'.format(type, i+1)
+        local_filename = '{}_{}.mp4'.format(play_type, i+1)
         r = requests.get(link, stream=True)
-        with open('../data/clips/{}/{}'.format(type, local_filename), 'wb') as f:
+        with open('../data/clips/{}/{}'.format(play_type, local_filename), 'wb') as f:
             for chunk in r.iter_content(chunk_size=1024): 
                 if chunk:
                     f.write(chunk)
@@ -61,13 +69,19 @@ def download_clips(type, n_clips):
 
     print('Time to download {} clips : {} seconds'.format(n_clips, str(dl_time)))
 
-def extract_frames(type, clip_number):
-  '''
-  Writes individual frames of clips into /data/broadcast_imgs/temp_frames'
+def extract_frames(play_type, clip_number):
+    '''
+    Writes individual frames of clips into /data/broadcast_imgs/temp_frames'.
+    Erases current contents of /data/broadcast_imgs/temp_frames' each time the 
+    function is executed
 
-  Erases current contents of /data/broadcast_imgs/temp_frames' each time the 
-  function is executed
-  '''
+    Arguments:
+        play_type: type of clip to extract from
+        clip_number: number of clip (in file name) for frames to be extracted from
+
+    Returns: 
+        None
+    '''
 
   #erase current contents of temp folder
   frame_folder = '../data/broadcast_imgs/temp_frames'
@@ -80,7 +94,7 @@ def extract_frames(type, clip_number):
         print(e)
 
   #extract frames of clip
-  clip = '../data/clips/{}/{}_{}.mp4'.format(type, type, clip_number)
+  clip = '../data/clips/{}/{}_{}.mp4'.format(play_type, play_type, clip_number)
   vidcap = cv2.VideoCapture(clip)
   success,image = vidcap.read()
   count = 0
@@ -88,7 +102,7 @@ def extract_frames(type, clip_number):
   while success:
     success, image = vidcap.read()
     save_path = frame_folder + '/{}_{}_frame_{}.jpg'
-    cv2.imwrite(save_path.format(type, clip_number, count), image)
+    cv2.imwrite(save_path.format(play_type, clip_number, count), image)
     if cv2.waitKey(10) == 27:
         break
     count += 1
