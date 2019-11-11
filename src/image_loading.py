@@ -4,9 +4,26 @@ from tempfile import TemporaryFile
 import matplotlib
 import matplotlib.pyplot as plt
 import numpy as np
+from google_images_download import \
+    google_images_download 
 from skimage.color import gray2rgb, rgb2gray, rgba2rgb
 from skimage.io import imread, imread_collection
 from skimage.transform import resize
+
+def download_images():
+    response = google_images_download.googleimagesdownload()
+
+    # the 'jump shot' keyword has a space to avoid downloading the fortnite skin images
+    # the directory is later changed to 'jumpshot' manually
+    arguments = {'keywords':'dunk, jump shot',
+                'limit': 510,
+                'print_urls':True,
+                'output_directory': '../data/google_imgs/',
+                'format': 'jpg',
+                'type': 'photo'}   #creating list of arguments
+
+    paths = response.download(arguments)   #passing the arguments to the function
+    print(paths)
 
 
 def get_image(path):
