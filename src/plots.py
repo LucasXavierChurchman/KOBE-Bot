@@ -1,5 +1,6 @@
 import os
 from tempfile import TemporaryFile
+
 import matplotlib
 import matplotlib.pyplot as plt
 import numpy as np
@@ -12,6 +13,7 @@ from skimage.transform import resize
 from sklearn.decomposition import NMF, PCA
 
 from image_processing import get_all_images, get_image, images_to_array
+
 
 def plot_image_color(v, ax, resolution, title):
     '''
