@@ -55,7 +55,8 @@ def train_CNN(images, labels, epochs):
     '''
     Train the CNN with the training data and given number of epochs
 
-    TODO: Allow other hyper parameters as inputs. Tune/add layers.
+    TODO: Allow other hyper parameters as inputs, Tune/add layers, try different
+    augmentations
     '''
 
     #turn string labels into binary labels
@@ -97,7 +98,7 @@ def train_CNN(images, labels, epochs):
     head_model = Flatten(name="flatten")(head_model)
     head_model = Dense(512, activation="relu")(head_model)
     head_model = Dropout(0.50)(head_model)
-    head_model = Dense(2, activation="softmax")(head_model)
+    head_model = Dense(2, activation="sigmoid")(head_model)
 
     model = Model(inputs=transferred_model.input, outputs=head_model)
 
