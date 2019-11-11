@@ -11,6 +11,12 @@ from skimage.transform import resize
 def download_images(n_images):
     '''
     Downloads 'dunk' and 'jump shot' n_images to /data/google_imgs/
+
+    Arguments:
+        n_images: number of images to be downloaded
+        
+    Returns: 
+        None
     '''
     response = google_images_download.googleimagesdownload()
 
@@ -29,6 +35,12 @@ def download_images(n_images):
 def get_image(path):
     '''
     Returns and resizes image from path
+
+    Arguments:
+        path: path to image
+
+    Returns:
+        img: image as array
     '''
     img = imread(path, plugin='matplotlib')
     img = resize(img, (240,240))
@@ -37,6 +49,12 @@ def get_image(path):
 def get_all_images(folder_path):
     '''
     Generates a list of image paths from a folder
+
+    Arguments:
+        folder_path: path to folder of images
+
+    Returns:
+        image_list: list of image paths
     '''
     image_list = []
     for filename in os.listdir(folder_path):
@@ -47,8 +65,14 @@ def get_all_images(folder_path):
 
 def images_to_array(image_list, save_name):
     '''
-    Converts and returns list of image paths generated from get_all_imagaes into a 
-    numpy array of images. The array is saved in /data/image_arrays
+    Takes a list of image paths, converts to numpy array, and is saved in /data/image_arrays
+
+    Arguments:
+        image_list: list of image paths (use get_all_images)
+
+    returns:
+        image_array: numpy array of imagaes
+
     '''
     for n, img in enumerate(image_list):
          #if grayscale convery to rgb since all images must have same dimension
