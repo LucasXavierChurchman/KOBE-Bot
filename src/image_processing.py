@@ -70,9 +70,8 @@ def images_to_array(image_list, save_name):
     Arguments:
         image_list: list of image paths (use get_all_images)
 
-    returns:
+    Returns:
         image_array: numpy array of imagaes
-
     '''
     for n, img in enumerate(image_list):
          #if grayscale convery to rgb since all images must have same dimension
