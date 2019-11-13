@@ -42,6 +42,13 @@ Although they are far from consistent (especially the Google Images) we can make
 
 |              | Google Images                                                                                                            | Broadcast Frames                                                                     |
 |--------------|--------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------|
-| Similarities | -Arms extended, ball held above head                                                                                     | -Paint on court and crowd creates dark vs light boundary of playing space            |
-| Differences  | -Backboard often visible, exaggerated body position for dunks. Another body (defender) in frame more common in jumpshots | -Players are more spread out for jumpshots. Players are clumped near basket for dunk |
+| Similarities | Arms extended, ball held above head                                                                                     | Paint on court and crowd creates dark vs light boundary of playing space            |
+| Differences  | Backboard often visible, exaggerated body position for dunks. Another body (defender) in frame more common in jumpshots | Players are more spread out for jumpshots. Players are clumped near basket for dunk |
 
+Some of these comparisions are apparent by looking at the averages of each set of images their pixel intensities
+
+#### Google Images:
+![Avg google images](https://github.com/LucasXavierChurchman/KOBE-Bot/blob/master/plots%2Bimages/google_image_avgs.png)
+
+#### Broadcast Angle:
+![Avg broadcast images](https://github.com/LucasXavierChurchman/KOBE-Bot/blob/master/plots%2Bimages/denver_image_avgs.png)
