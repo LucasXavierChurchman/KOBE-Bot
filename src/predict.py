@@ -1,10 +1,20 @@
-import cv2
+from collections import deque
 import cv2.cv2 as cv2
 import numpy as np
 from keras.models import load_model
-from collections import deque
+
 
 def predict_img(img_path, model):
+    '''
+    Predicts class of an image
+
+    Arguments:
+        img_path: path to image file
+        model: keras model
+
+    Returns:
+        None
+    '''
     img = cv2.imread(img_path)
     cv2.waitKey()
 
@@ -13,10 +23,8 @@ def predict_img(img_path, model):
 
     pred = model.predict(np.expand_dims(img, axis=0))[0]
 
-    # print('[0,1] = dunk, [1,0] = jumpshot')
+    print('[0,1] = dunk, [1,0] = jumpshot')
     print(np.round(pred, 2))
 
 if __name__ == '__main__':
-    model = load_model('../models/google_200_epochs_81_acc.model')
-    img_path = '../data/google_imgs/test_dunk/1.919689104.jpg'
-    predict_img(img_path, model)
+    pass

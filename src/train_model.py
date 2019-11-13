@@ -1,7 +1,5 @@
 import random
-
-import cv2
-import cv2.cv2 as cv2  # extra import gets rid of error warnings
+import cv2.cv2 as cv2
 import numpy as np
 import pandas as pd
 import tensorflow as tf
@@ -14,15 +12,22 @@ from keras.layers.pooling import AveragePooling2D
 from keras.models import Model
 from keras.optimizers import SGD
 from keras.preprocessing.image import ImageDataGenerator
+from sklearn.metrics import confusion_matrix
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import LabelBinarizer
-from sklearn.metrics import confusion_matrix
-
 
 def load_images_and_labels(target_labels, type):
     '''
     Loads all images from directories with names in target_labels
     a label and image array
+
+    Arguments:
+        target_labels: list of labels. Must be same as folders in data direcotry
+        type: type of images to be loaded (google or broadcast)
+
+    Returns:
+        images: numpy array of images
+        labels: numpy array of labels
 
     TODO: Make this work with np.load() and skimage (if possible)
     '''
@@ -53,9 +58,20 @@ def load_images_and_labels(target_labels, type):
 
 def train_CNN(images, labels, epochs):
     '''
-    Train the CNN with the training data
+    Train the CNN with the training data and given number of epochs
 
-    TODO: Allow other hyper parameters as inputs. Tune/add layers.
+    Arguments:
+        images: numpy array of rgb images
+        labels: numpy array of image class labels
+        epochs: number of epochs for training
+
+    Returns:
+        model: trained keras model
+        history: model history csv
+        conmat: model confusion matrix
+
+    TODO: Allow other hyper parameters as inputs, Tune/add layers, try different
+    augmentations
     '''
 
     #turn string labels into binary labels
@@ -97,7 +113,7 @@ def train_CNN(images, labels, epochs):
     head_model = Flatten(name="flatten")(head_model)
     head_model = Dense(512, activation="relu")(head_model)
     head_model = Dropout(0.50)(head_model)
-    head_model = Dense(2, activation="softmax")(head_model)
+    head_model = Dense(2, activation="sigmoid")(head_model)
 
     model = Model(inputs=transferred_model.input, outputs=head_model)
 
@@ -128,7 +144,6 @@ if __name__ == '__main__':
     images, labels = load_images_and_labels(target_labels, type = category)
     model, history, con_mat = train_CNN(images, labels, epochs = epochs)
 
-    #save model, history, and confusion matrix
     model.save('../models/{}_{}_epochs.model'.format(category, epochs))
 
     hist_df = pd.DataFrame(history.history)
