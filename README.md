@@ -82,4 +82,7 @@ The same network structure was used on both sets of images giving models with th
 
 I was overall satisfied with the valdiation accuracies for both models, even if both are overfit. Very limited time was available for hyperparameter and layer tuning so these are easy places to look for improvement
 
+## Image Prediction Results
+
+![image_predictions](https://github.com/LucasXavierChurchman/KOBE-Bot/blob/master/plots%2Bimages/prediction_examples.png)
 
