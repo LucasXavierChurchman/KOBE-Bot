@@ -26,8 +26,7 @@ b) Frames extracted from clips from the broadcast camera angle</br>
 
 The training and validation for each type of image was generate in very different ways.
 
-Google images data was (surprise) generated from a Google Images query using [this package]
-(https://pypi.org/project/google_images_download/). 
+Google images data was (surprise) generated from a Google Images query using [this package](https://pypi.org/project/google_images_download/). 
 
 For the broadcast images, I downloaded videos from [3ball.io](https://3ball.io/plays) where you can filter highlights by play type, home team, period, etc. Once downloaded I wrote a function that uses CV2 to separate the video frame by frame and save them to a temporary directory. For the images that would actually be used for training, I decided to use frames that were as similar as possible to the Google images despite the very different camera perspective: when the player was in the shooting or dunking motion. To this end I found the frame when the player started their jumping/shooting motion and copied the next second worth of frames (30 or 60 depending on the clip's framerate) into the training image directory.
 
