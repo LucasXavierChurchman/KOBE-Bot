@@ -5,7 +5,7 @@
 ## Table of Contents
 1. [Background](#background)
 2. [Objectives](#objectives)
-2. [Data](#data)
+3. [Data](#data)
 4. [Analysis](#analysis)
 5. [Takeaways](#takeaways)
 6. [Credits and Acknowledgements](#credits-and-acknowledgements)
@@ -16,13 +16,14 @@ I wanted to explore if computer vision and machine learning techniques can be us
 
 ## Objectives
 
-* Classify images as a dunk or jumpshot in:
-⋅⋅* Photos from Google Images
-⋅⋅* Frames extracted from clips from the broadcast camera angle<
+* Classify images as a dunk or jumpshot in:</br>
+a) Photos from Google Images</br>
+b) Frames extracted from clips from the broadcast camera angle</br>
 * Identify the unique challenges of differentiating between a dunk and jumpshot for each of these types of images.
 * Classify a highlight clip by taking the majority classification prediction of its individual frames
 
+## Data
 
-1. First ordered list item
-2. Another item
-⋅⋅* Unordered sub-list. 
+Google images data was (surprise) generated from a Google Images query using [this package](https://pypi.org/project/google_images_download/)
+
+![image exampels](https://github.com/LucasXavierChurchman/KOBE-Bot/blob/master/plots%2Bimages/each_type_and_class_example.png)
