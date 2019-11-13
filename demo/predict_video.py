@@ -48,6 +48,7 @@ while True:
 
 	#copy frame and transform frame for prediction
 	output = frame.copy()
+	output = cv2.resize(output, (960,540))
 	frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
 	frame = cv2.resize(frame, (240, 240)).astype("float32")
 
@@ -72,7 +73,7 @@ while True:
 
 	#print predictions to output window
 	text1 = 'Current Frame Prediction: {}'.format(pred)
-	text2 = 'Rolling Prediciton Probabilty [jumpshot, dunk]: {}'.format(np.round(rolling_pred,2))
+	text2 = 'Overall Probabilty [jumpshot, dunk]: {}'.format(np.round(rolling_pred,2))
 	cv2.putText(img = output, 
 				text = text1, 
 				org = (35, 50), 
@@ -102,7 +103,7 @@ while True:
 		break
 
 print('Frames classified as jumpshot: ', jump_frames, '\nFrames classified as dunk: ', dunk_frames)
-print('Prediction Probability [jumpshot, dunk]: ',rolling_pred)
+print('Prediction Probability [jumpshot, dunk]: \n',rolling_pred)
 if rolling_pred[0] > rolling_pred[1]:
 	print ('KOBE!')
 	playsound('kobe.mp3')
