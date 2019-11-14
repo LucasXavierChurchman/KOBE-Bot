@@ -89,13 +89,15 @@ while True:
 				color = (0, 255, 0),
 				thickness = 3)
 
-	#Write and display frame
+	#Write frame to output video
 	if writer is None:
 		fourcc = cv2.VideoWriter_fourcc(*"MJPG")
-		writer = cv2.VideoWriter(args["output"], fourcc, 30,
-			(W, H), True)
+		writer = cv2.VideoWriter(args["output"], fourcc, 60,(960, 540), True)
 	writer.write(output)
+
+	#display frame 
 	cv2.imshow("Output", output)
+
 
 	#break if q key is pressed
 	key = cv2.waitKey(1) & 0xFF
