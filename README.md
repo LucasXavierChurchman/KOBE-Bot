@@ -74,7 +74,7 @@ The Google images show distinct differences in latent features between dunks and
 
 Keras' pre-loaded ImageNet architechtures are the industry standard for image classification models. I decided to use transfer learning from one of these architectures, and ultimately decided on ResNet-50 since it gave the best results (as to the "why" will require more investigation). Added 5 layers on top of ResNet-50.
 
-![network_diagram](https://github.com/LucasXavierChurchman/KOBE-Bot/tree/master/plots%2Bimages)
+![network_diagram](https://github.com/LucasXavierChurchman/KOBE-Bot/blob/master/plots%2Bimages/cnn_diagram.png)
 
 The same network structure was used on both sets of images giving models with the following results:
 
