@@ -112,7 +112,7 @@ venv.bak/
 # *.png #needed for graphics
 *.JPG
 *.webp
-*.gif
+# *.gif
 # *.csv
 
 *.npy
