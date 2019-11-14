@@ -86,3 +86,46 @@ I was overall satisfied with the valdiation accuracies for both models, even if 
 
 ![image_predictions](https://github.com/LucasXavierChurchman/KOBE-Bot/blob/master/plots%2Bimages/prediction_examples.png)
 
+All of the images in the broadcast column were captured within 30 frames (a half second) of each other. It’s interesting that one was misclassified considering how similar they appear to the human eye
+
+## Video Prediction example
+
+The yellow text displays the prediction of the current frame being displayed while the green text updates the overall current prediction for the clip overall
+
+![demo gif](https://github.com/LucasXavierChurchman/KOBE-Bot/blob/master/demo/compiled_for_demo.gif)
+
+## Future Work
+
+* Further improve training data and methodology
+* Tune CNN hyperparameters and layers to further improve model accuracy and fit
+* Multiclass classfier with more types of plays (pass, block, steal, free-throw, etc.)
+* Utilize object detection or other deep learning models
+
+## References 
+
+
+Mallick, Satya. “Eigenface Using OpenCV (C /Python).” Learn OpenCV, 18 Jan. 2018, 
+https://www.learnopencv.com/eigenface-using-opencv-c-python/.
+
+PyImageSearch, 11 Nov. 2019, https://www.pyimagesearch.com/.
+
+“ResNet-50.” Applications - Keras Documentation
+https://keras.io/applications/#resnet.
+
+Rosebrock, Adrian. “ImageNet: VGGNet, ResNet, Inception, and Xception with Keras.” 
+PyImageSearch, 5 Feb. 2019, https://www.pyimagesearch.com/2017/03/20/imagenet-vggnet-resnet-inception-xception-keras/.
+
+Rosebrock, Adrian. “Video Classification with Keras and Deep Learning.” 
+PyImageSearch, 12 July 2019,
+https://www.pyimagesearch.com/2019/07/15/video-classification-with-keras-and-deep-learning/.
+
+“Searchable NBA Video.” 3 Ball, https://3ball.io/plays.
+
+## Acknowledgements:
+
+* My friends and family for their love and encouragement
+* The Galvanize DSI instructors, Kayla Thomas, Frank Burkholder, and Nick Jocobsohn for their teaching and encouragement
+* My DSI cohort-mates for their support and collaborative learning
+
+
+
