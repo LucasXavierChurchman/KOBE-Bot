@@ -6,9 +6,11 @@
 1. [Background](#background)
 2. [Objectives](#objectives)
 3. [Data and EDA](#data-and-eda)
-4. [Analysis](#analysis)
-5. [Takeaways](#takeaways)
-6. [Credits and Acknowledgements](#credits-and-acknowledgements)
+4. [Model](#analysis)
+5. [Results](#results)
+6. [Future Work](#future-work)
+7. [References](#references)
+8. [Acknowledgements](#acknowledgements)
 
 ## Background
 
@@ -82,13 +84,15 @@ The same network structure was used on both sets of images giving models with th
 
 I was overall satisfied with the valdiation accuracies for both models, even if both are overfit. Very limited time was available for hyperparameter and layer tuning so these are easy places to look for improvement
 
-## Image Prediction Results
+## Results
+
+### Image Prediction Results
 
 ![image_predictions](https://github.com/LucasXavierChurchman/KOBE-Bot/blob/master/plots%2Bimages/prediction_examples.png)
 
 All of the images in the broadcast column were captured within 30 frames (a half second) of each other. It’s interesting that one was misclassified considering how similar they appear to the human eye
 
-## Video Prediction example
+### Video Prediction example
 
 The yellow text displays the prediction of the current frame being displayed while the green text updates the overall current prediction for the clip overall
 
